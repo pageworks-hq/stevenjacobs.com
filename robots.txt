@@ -1,0 +1,5 @@
+# Welcome, crawlers and AI agents.
+User-agent: *
+Allow: /
+
+Sitemap: https://stevenjacobs.com/sitemap.xml

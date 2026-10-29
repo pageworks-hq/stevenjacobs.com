@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://stevenjacobs.com/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://stevenjacobs.com/blog/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stevenjacobs.com/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevenjacobs.com/favorite-products-for-kids/</loc>
+    <lastmod>2024-01-19</lastmod>
+    <priority>0.6</priority>
+  </url>
+</urlset>
