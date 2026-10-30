@@ -161,6 +161,11 @@ nav .links a:not(.btn-blog):hover::after{width:100%}
 .face.gl .face-bg{display:block}
 .face canvas{position:absolute;left:-60%;top:-60%;width:220%;height:220%;pointer-events:none;z-index:3}
 .face-hint{margin-top:14px;text-align:center;font:500 11px var(--mono);letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+.press{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.press-lbl{font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.press ul{list-style:none;display:flex;flex-wrap:wrap;gap:10px 30px}
+.press li{font-family:var(--serif);font-size:clamp(19px,1.7vw,24px);color:var(--muted);transition:color .3s}
+.press li:hover{color:var(--fg)}
 .cursor.grab{width:64px;height:64px}
 .cursor.grab .label{opacity:1;color:var(--fg)}
 @media (max-width:900px){
@@ -186,7 +191,7 @@ h1.name .word:last-child .ch{font-style:italic}
 .tag:hover .dot{background:#fff}
 
 .rotator{margin-top:40px;font-family:var(--serif);font-size:clamp(24px,3.2vw,40px);color:var(--muted)}
-.wave-slot{height:110px;margin:36px 0 70px}
+.wave-slot{height:110px;margin:28px 0 70px}
 @media (max-width:600px){.wave-slot{height:80px;margin:28px 0 60px}}
 .rotator em{color:var(--fg);font-style:italic}
 .rotator .scr{color:var(--accent);font-family:var(--mono);font-size:.7em}
@@ -349,6 +354,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
     </div>
 
+    <div class="press">
+      <p class="press-lbl">My businesses have been featured in</p>
+      <ul>
+        <li>The New Yorker</li><li>Forbes</li><li>Business Insider</li><li>TIME</li><li>The Atlantic</li><li>VICE</li><li>Variety</li><li>BuzzFeed</li><li>Rolling Stone</li><li>The Hollywood Reporter</li><li>Billboard</li><li>Complex</li><li>Pitchfork</li><li>GRAMMY</li><li>NME</li><li>Stereogum</li>
+      </ul>
+    </div>
+
     <div class="wave-slot" id="waveSlot" aria-hidden="true"></div>
 
     <div class="scroll-hint"><span class="bar"></span>SCROLL</div>
@@ -358,8 +370,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   <section id="work">
     <div class="wrap">
-      <div class="eyebrow reveal">Fun things I'm working on</div>
-      <h2 class="reveal">Side quests &amp; <em>real</em> projects.</h2>
+      <div class="eyebrow reveal">01 · Projects</div>
+      <h2 class="reveal">Some things I'm <em>working on.</em></h2>
       <div class="projects">
         <a class="proj reveal" href="https://www.ravejesus.com/" target="_blank" rel="noopener" style="--glow:#b14bff" data-cursor="VISIT">
           <div class="num"><span>01 / MUSIC</span><span class="arrow">↗</span></div>
@@ -394,7 +406,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   <section id="writing">
     <div class="wrap">
-      <div class="eyebrow reveal">Writing</div>
+      <div class="eyebrow reveal">02 · Writing</div>
       <h2 class="reveal">Occasional <em>notes.</em></h2>
       <div class="posts posts-wrap reveal">
         <a class="post" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/" data-cursor="READ" data-preview="Semi-active income." data-color="#ff5a1f">
@@ -427,7 +439,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   <section class="contact" id="contact">
     <div class="wrap">
-      <div class="eyebrow reveal" style="justify-content:center">Contact</div>
+      <div class="eyebrow reveal" style="justify-content:center">03 · Contact</div>
       <h2 class="reveal">Say <em>hello.</em></h2>
       <a class="big-link magnet reveal" href="https://x.com/StevenJacobs" target="_blank" rel="noopener" data-cursor="DM ME">
         <span class="handle">@StevenJacobs</span><span>↗</span>
