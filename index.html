@@ -843,51 +843,54 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     faceImg.addEventListener('pointerdown',e=>{
       if (!opaque(e)) return;
       e.preventDefault(); faceImg.setPointerCapture(e.pointerId);
-      const [x,y]=local(e); grab={gx:x,gy:y,x,y};
+      const [x,y]=local(e); grab={gx:x,gy:y,x,y}; hov=null;
     });
-    let hov=null, last=null;
+    // hovering is a soft grab: the skin under the cursor gets dragged along, mostly sideways
+    let hov=null;
     faceImg.addEventListener('pointermove',e=>{
-      cur.classList.toggle('grab', !!grab || opaque(e)); lab.textContent='PULL';
+      const on=opaque(e);
+      cur.classList.toggle('grab', !!grab || on); lab.textContent='PULL';
       const [x,y]=local(e);
-      if (grab){ [grab.x,grab.y]=local(e); dirty=true; }
-      // just hovering smears the skin along with the cursor, then it wobbles back
-      else if (last){ hov={x,y,dx:(hov?hov.dx:0)+x-last[0],dy:(hov?hov.dy:0)+y-last[1]}; dirty=true; }
-      last=[x,y];
+      if (grab){ grab.x=x; grab.y=y; dirty=true; }
+      else if (!hov && on){ hov={gx:x,gy:y,x,y}; dirty=true; }
     });
-    faceImg.addEventListener('pointerleave',()=>{ last=null; if (!grab) cur.classList.remove('grab'); });
+    // keep dragging past the edge of the picture; let go once the cursor is well clear of it
+    addEventListener('pointermove',e=>{
+      if (!hov || grab) return;
+      const r=faceImg.getBoundingClientRect(), m=r.width*.45;
+      if (e.clientX<r.left-m||e.clientX>r.right+m||e.clientY<r.top-m*.5||e.clientY>r.bottom+m*.5){ hov=null; dirty=true; return; }
+      [hov.x,hov.y]=local(e); dirty=true;
+    });
+    faceImg.addEventListener('pointerleave',()=>{ if (!grab) cur.classList.remove('grab'); });
     const release=()=>{ if (!grab) return; boing(Math.min(1,Math.hypot(grab.x-grab.gx,grab.y-grab.gy)/iw)); grab=null; cur.classList.remove('grab'); };
     faceImg.addEventListener('pointerup',release); faceImg.addEventListener('pointercancel',release);
 
     faceStep=()=>{
       if (!dirty) return;
-      const max=iw*.8;
+      const pull=grab||hov, max=grab?iw*.8:iw*.6;
       let dx=0, dy=0, s2=1;
-      if (grab){
-        dx=grab.x-grab.gx; dy=grab.y-grab.gy;
+      if (pull){
+        dx=pull.x-pull.gx; dy=pull.y-pull.gy;
+        if (!grab){
+          dx*=1.1; dy*=.45;
+          // the hover anchor slowly catches up, so the face eases back if the cursor rests
+          pull.gx+=(pull.x-pull.gx)*.025; pull.gy+=(pull.y-pull.gy)*.025;
+        }
         // the further you pull, the harder it resists
         const L=Math.hypot(dx,dy); if (L>0){ const f=max*Math.tanh(L/max)/L; dx*=f; dy*=f; }
         // widen the falloff with the pull so the skin stretches instead of folding over itself
         const sig=Math.max(iw*.16, Math.hypot(dx,dy)*.62); s2=sig*sig*2;
       }
-      if (hov && !grab){
-        const hs=iw*.13, h2=hs*hs*2, cap=iw*.06;
-        const hx=Math.max(-cap,Math.min(cap,hov.dx)), hy=Math.max(-cap,Math.min(cap,hov.dy));
-        for (let k=0;k<cnt*2;k+=2){
-          const ex=pos[k]-hov.x, ey=pos[k+1]-hov.y, w=Math.exp(-(ex*ex+ey*ey)/h2);
-          vel[k]+=hx*w*.45; vel[k+1]+=hy*w*.45;
-        }
-      }
-      hov=null;
-      const stiff=grab?.3:.1, damp=grab?.5:.84;
+      const stiff=grab?.3:hov?.2:.1, damp=grab?.5:hov?.62:.84;
       let moving=0;
       for (let k=0;k<cnt*2;k+=2){
         let tx=rest[k], ty=rest[k+1];
-        if (grab){ const ex=rest[k]-grab.gx, ey=rest[k+1]-grab.gy, w=Math.exp(-(ex*ex+ey*ey)/s2); tx+=dx*w; ty+=dy*w; }
+        if (pull){ const ex=rest[k]-pull.gx, ey=rest[k+1]-pull.gy, w=Math.exp(-(ex*ex+ey*ey)/s2); tx+=dx*w; ty+=dy*w; }
         vel[k]=vel[k]*damp+(tx-pos[k])*stiff; vel[k+1]=vel[k+1]*damp+(ty-pos[k+1])*stiff;
         pos[k]+=vel[k]; pos[k+1]+=vel[k+1];
         moving=Math.max(moving,Math.abs(vel[k])+Math.abs(vel[k+1])+Math.abs(pos[k]-tx)+Math.abs(pos[k+1]-ty));
       }
-      if (!grab && moving<.05){ pos.set(rest); vel.fill(0); dirty=false; }
+      if (!pull && moving<.05){ pos.set(rest); vel.fill(0); dirty=false; }
       gl.viewport(0,0,faceCv.width,faceCv.height);
       gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(resL,faceCv.width,faceCv.height);
