@@ -46,6 +46,7 @@
       "@type": "Person",
       "@id": "https://stevenjacobs.com/#person",
       "name": "Steven Jacobs",
+      "image": "https://stevenjacobs.com/avatar.png",
       "givenName": "Steven",
       "familyName": "Jacobs",
       "url": "https://stevenjacobs.com/",
@@ -123,17 +124,51 @@ main,header,footer{position:relative;z-index:2}
 .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
 
 /* nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:22px 32px;font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;mix-blend-mode:difference;color:#f2efe9}
-nav .links{display:flex;gap:28px;align-items:center}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 32px;font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--fg);background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s,background .5s}
+nav.scrolled{border-bottom-color:var(--line)}
+nav .links{display:flex;gap:24px;align-items:center}
 nav a{position:relative}
-nav a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:currentColor;transition:width .3s}
-nav a:hover::after{width:100%}
+nav .links a:not(.btn-blog)::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:currentColor;transition:width .3s}
+nav .links a:not(.btn-blog):hover::after{width:100%}
+.me{display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font:500 14px var(--sans)}
+.me img{width:34px;height:34px;border-radius:50%;display:block}
+.btn-blog{background:var(--accent);color:#fff;padding:9px 18px;border-radius:999px;transition:transform .3s,background .3s}
+.btn-blog:hover{background:var(--fg);color:var(--bg)}
 #theme,#sound{background:none;border:1px solid currentColor;color:inherit;border-radius:20px;padding:5px 10px;font:inherit}
 .clock{opacity:.7}
-#sound.on{background:#f2efe9;color:#0b0b0c}
+#sound.on{background:var(--fg);color:var(--bg)}
 
 /* hero */
-.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-top:80px}
+.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-top:96px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.hero h1.name{font-size:clamp(56px,7.6vw,124px)}
+.hero .tags{margin-top:28px}
+.blurb{margin-top:30px;max-width:540px;font-size:17px;line-height:1.65;color:var(--muted)}
+.blurb p+p{margin-top:12px}
+.blurb strong{color:var(--fg);font-weight:500}
+.blurb .rotator{margin:12px 0 0;font:inherit;color:inherit}
+.blurb .rotator .scr{font-size:.9em}
+.sub{margin-top:28px;display:flex;gap:8px;max-width:460px}
+.sub input{flex:1;min-width:0;font:15px var(--sans);color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:13px 18px;outline:none;transition:border-color .3s}
+.sub input:focus{border-color:var(--accent)}
+.sub button{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;background:var(--accent);color:#fff;border:0;border-radius:999px;padding:0 22px;transition:background .3s,color .3s}
+.sub button:hover{background:var(--fg);color:var(--bg)}
+.sub-note{margin-top:10px;font:500 11px var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.face{position:relative;justify-self:center;width:min(100%,440px)}
+.face img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none;touch-action:none}
+.face.gl img{opacity:0}
+.face-bg{position:absolute;left:.93%;top:16.41%;width:98.45%;aspect-ratio:1;border-radius:50%;background:#35afe0;display:none}
+.face.gl .face-bg{display:block}
+.face canvas{position:absolute;left:-60%;top:-60%;width:220%;height:220%;pointer-events:none;z-index:3}
+.face-hint{margin-top:14px;text-align:center;font:500 11px var(--mono);letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+.cursor.grab{width:64px;height:64px}
+.cursor.grab .label{opacity:1;color:var(--fg)}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .face{order:-1;width:min(64vw,280px)}
+  .face-hint{display:none}
+  nav .clock{display:none}
+}
 .hello{font:500 13px var(--mono);letter-spacing:.2em;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:12px}
 .hello .wave{display:inline-block;animation:wave 2.4s ease-in-out infinite;transform-origin:70% 70%}
 @keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(14deg)}20%{transform:rotate(-8deg)}40%{transform:rotate(-4deg)}50%{transform:rotate(10deg)}}
@@ -266,31 +301,53 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <div class="preview" id="preview"></div>
 
 <nav>
-  <a href="#top">SJ</a>
+  <a href="#top" class="me"><img src="/nav-avatar.jpg" alt="" width="34" height="34">@StevenJacobs</a>
   <div class="links">
-    <span class="clock" id="clock">ATX —:—</span>
-    <a href="#work">Work</a>
-    <a href="#writing">Writing</a>
-    <a href="#contact" class="nav-hide">Contact</a>
+    <span class="clock nav-hide" id="clock">ATX —:—</span>
+    <a href="#work" class="nav-hide">Work</a>
+    <a href="#writing" class="nav-hide">Writing</a>
     <button id="sound" class="pill" aria-label="Toggle sound">♪ OFF</button>
     <button id="theme" aria-label="Toggle theme">◐</button>
+    <a href="/blog/" class="btn-blog">Blog</a>
   </div>
 </nav>
 
 <main id="top">
   <header class="hero wrap">
-    <div class="hello"><span class="wave">👋</span> HELLO, I'M</div>
-    <h1 class="name" id="name" aria-label="Steven Jacobs">Steven Jacobs</h1>
+    <div class="hero-grid">
+      <div>
+        <div class="hello"><span class="wave">👋</span> HELLO, I'M</div>
+        <h1 class="name" id="name" aria-label="Steven Jacobs">Steven Jacobs</h1>
 
-    <ul class="tags" id="tags" aria-label="About Steven">
-      <li class="tag magnet"><span class="dot"></span>Austin, Texas</li>
-      <li class="tag magnet"><span class="dot"></span>Family Man</li>
-      <li class="tag magnet"><span class="dot"></span>Music Industry</li>
-      <li class="tag magnet"><span class="dot"></span>Investor</li>
-      <li class="tag magnet"><span class="dot"></span>Real Estate</li>
-    </ul>
+        <ul class="tags" id="tags" aria-label="About Steven">
+          <li class="tag magnet"><span class="dot"></span>Austin, Texas</li>
+          <li class="tag magnet"><span class="dot"></span>Family Man</li>
+          <li class="tag magnet"><span class="dot"></span>Music Industry</li>
+          <li class="tag magnet"><span class="dot"></span>Investor</li>
+          <li class="tag magnet"><span class="dot"></span>Real Estate</li>
+        </ul>
 
-    <p class="rotator">Building things in <em>Austin</em> — lately: <span class="scr" id="scramble">Rave Jesus</span></p>
+        <div class="blurb">
+          <p>I live in <strong>Austin, Texas</strong> with my family. I work in the music industry, invest, and buy real estate.</p>
+          <p>I'm part of the team behind <strong>Rave Jesus</strong>, opening <strong>Another Nine</strong> indoor golf in Pflugerville, and running <strong>Beached Inn</strong> in Port Aransas.</p>
+          <p class="rotator">Lately I'm building <span class="scr" id="scramble">Rave Jesus</span></p>
+          <p>Every so often I write about business, investing and family. Subscribe to get new posts by email.</p>
+        </div>
+
+        <form class="sub" id="subForm">
+          <input type="email" name="email" required placeholder="you@email.com" aria-label="Email address" autocomplete="email">
+          <button type="submit" class="magnet">Subscribe →</button>
+        </form>
+        <p class="sub-note" id="subNote">New posts only. No spam.</p>
+      </div>
+
+      <div class="face" id="face">
+        <div class="face-bg"></div>
+        <img id="faceImg" src="/avatar.png" alt="Illustrated portrait of Steven Jacobs" width="323" height="384" draggable="false">
+        <canvas id="faceCv" aria-hidden="true"></canvas>
+        <p class="face-hint">↑ Grab &amp; pull my face</p>
+      </div>
+    </div>
 
     <div class="wave-slot" id="waveSlot" aria-hidden="true"></div>
 
@@ -479,6 +536,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   // click = the drop: bars jump in a ripple from the click; near the waveform it strums a chord
   let drop=null;
   addEventListener('pointerdown', e => {
+    if (e.target.id==='faceImg') return;
     const cx=e.clientX*DPR, oy=rowY();
     drop={x:cx, t:performance.now()};
     if (Math.abs(e.clientY*DPR-oy)<160*DPR){ const d=noteAt(cx); impact(); pluck(d,.5,0); pluck(d+2,.4,.06); pluck(d+4,.35,.12); }
@@ -681,6 +739,136 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     el.addEventListener('pointerleave',()=> pv.classList.remove('on'));
   });
 
+  /* ---------- stretchy face: the portrait is a WebGL mesh you can grab and pull ---------- */
+  const face=document.getElementById('face'), faceImg=document.getElementById('faceImg'), faceCv=document.getElementById('faceCv');
+  const gl=faceCv.getContext('webgl',{premultipliedAlpha:true,alpha:true,antialias:true});
+  let faceStep=null;
+  function boing(s){
+    if (!soundOn) return;
+    const at=actx.currentTime, f0=110+s*420;
+    const o=actx.createOscillator(), g=actx.createGain(), lfo=actx.createOscillator(), lg=actx.createGain();
+    o.type='triangle'; o.frequency.setValueAtTime(f0,at); o.frequency.exponentialRampToValueAtTime(f0*.45,at+.6);
+    lfo.frequency.value=11; lg.gain.value=f0*.12; lfo.connect(lg); lg.connect(o.frequency);
+    g.gain.setValueAtTime(.35,at); g.gain.exponentialRampToValueAtTime(.0001,at+.7);
+    o.connect(g); g.connect(comp); o.start(at); lfo.start(at); o.stop(at+.75); lfo.stop(at+.75);
+  }
+  function initFace(){
+    const sh=(type,src)=>{ const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; };
+    const prog=gl.createProgram();
+    gl.attachShader(prog,sh(gl.VERTEX_SHADER,'attribute vec2 p;attribute vec2 uv;uniform vec2 res;varying vec2 v;void main(){v=uv;vec2 c=p/res*2.-1.;gl_Position=vec4(c.x,-c.y,0.,1.);}'));
+    gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,'precision mediump float;uniform sampler2D t;varying vec2 v;void main(){gl_FragColor=texture2D(t,v);}'));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog,gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+    // mesh over the image, in canvas pixels
+    const N=40, C=N+1, cnt=C*C;
+    const rest=new Float32Array(cnt*2), pos=new Float32Array(cnt*2), vel=new Float32Array(cnt*2), uvs=new Float32Array(cnt*2);
+    for (let j=0;j<C;j++) for (let i=0;i<C;i++){ const k=(j*C+i)*2; uvs[k]=i/N; uvs[k+1]=j/N; }
+    const idx=new Uint16Array(N*N*6); let q=0;
+    for (let j=0;j<N;j++) for (let i=0;i<N;i++){ const a=j*C+i, b=a+1, c=a+C, d=c+1; idx.set([a,b,c,b,d,c],q); q+=6; }
+    const ib=gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,idx,gl.STATIC_DRAW);
+    const ub=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,ub); gl.bufferData(gl.ARRAY_BUFFER,uvs,gl.STATIC_DRAW);
+    const uvL=gl.getAttribLocation(prog,'uv'); gl.enableVertexAttribArray(uvL); gl.vertexAttribPointer(uvL,2,gl.FLOAT,false,0,0);
+    const pb=gl.createBuffer(), pL=gl.getAttribLocation(prog,'p'); gl.enableVertexAttribArray(pL);
+    const resL=gl.getUniformLocation(prog,'res');
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,true);
+    const tex=gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,tex);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,person);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+    // alpha lookup so only you are grabbable, not the blue circle or the corners
+    const ac=document.createElement('canvas'); ac.width=person.naturalWidth; ac.height=person.naturalHeight;
+    const actx2=ac.getContext('2d'); actx2.drawImage(person,0,0);
+    const alpha=actx2.getImageData(0,0,ac.width,ac.height).data;
+
+    let ox=0, oy2=0, iw=0, ih=0, dpr=1, dirty=true, grab=null;
+    function layout(){
+      dpr=Math.min(devicePixelRatio||1,2);
+      const cr=faceCv.getBoundingClientRect(), ir=faceImg.getBoundingClientRect();
+      faceCv.width=Math.round(cr.width*dpr); faceCv.height=Math.round(cr.height*dpr);
+      ox=(ir.left-cr.left)*dpr; oy2=(ir.top-cr.top)*dpr; iw=ir.width*dpr; ih=ir.height*dpr;
+      for (let k=0;k<cnt*2;k+=2){ rest[k]=ox+uvs[k]*iw; rest[k+1]=oy2+uvs[k+1]*ih; }
+      pos.set(rest); vel.fill(0); dirty=true;
+    }
+    layout(); addEventListener('resize',layout);
+    face.classList.add('gl');
+
+    function local(e){ const cr=faceCv.getBoundingClientRect(); return [(e.clientX-cr.left)*dpr,(e.clientY-cr.top)*dpr]; }
+    function opaque(e){
+      const r=faceImg.getBoundingClientRect(), u=(e.clientX-r.left)/r.width, v=(e.clientY-r.top)/r.height;
+      if (u<0||u>1||v<0||v>1) return false;
+      return alpha[((Math.floor(v*(ac.height-1))*ac.width)+Math.floor(u*(ac.width-1)))*4+3]>60;
+    }
+    faceImg.addEventListener('pointerdown',e=>{
+      if (!opaque(e)) return;
+      e.preventDefault(); faceImg.setPointerCapture(e.pointerId);
+      const [x,y]=local(e); grab={gx:x,gy:y,x,y};
+    });
+    faceImg.addEventListener('pointermove',e=>{
+      cur.classList.toggle('grab', !!grab || opaque(e)); lab.textContent='PULL';
+      if (grab){ [grab.x,grab.y]=local(e); dirty=true; }
+    });
+    faceImg.addEventListener('pointerleave',()=>{ if (!grab) cur.classList.remove('grab'); });
+    const release=()=>{ if (!grab) return; boing(Math.min(1,Math.hypot(grab.x-grab.gx,grab.y-grab.gy)/iw)); grab=null; cur.classList.remove('grab'); };
+    faceImg.addEventListener('pointerup',release); faceImg.addEventListener('pointercancel',release);
+
+    faceStep=()=>{
+      if (!dirty) return;
+      const max=iw*.8;
+      let dx=0, dy=0, s2=1;
+      if (grab){
+        dx=grab.x-grab.gx; dy=grab.y-grab.gy;
+        // the further you pull, the harder it resists
+        const L=Math.hypot(dx,dy); if (L>0){ const f=max*Math.tanh(L/max)/L; dx*=f; dy*=f; }
+        // widen the falloff with the pull so the skin stretches instead of folding over itself
+        const sig=Math.max(iw*.16, Math.hypot(dx,dy)*.62); s2=sig*sig*2;
+      }
+      const stiff=grab?.3:.1, damp=grab?.5:.84;
+      let moving=0;
+      for (let k=0;k<cnt*2;k+=2){
+        let tx=rest[k], ty=rest[k+1];
+        if (grab){ const ex=rest[k]-grab.gx, ey=rest[k+1]-grab.gy, w=Math.exp(-(ex*ex+ey*ey)/s2); tx+=dx*w; ty+=dy*w; }
+        vel[k]=vel[k]*damp+(tx-pos[k])*stiff; vel[k+1]=vel[k+1]*damp+(ty-pos[k+1])*stiff;
+        pos[k]+=vel[k]; pos[k+1]+=vel[k+1];
+        moving=Math.max(moving,Math.abs(vel[k])+Math.abs(vel[k+1])+Math.abs(pos[k]-tx)+Math.abs(pos[k+1]-ty));
+      }
+      if (!grab && moving<.05){ pos.set(rest); vel.fill(0); dirty=false; }
+      gl.viewport(0,0,faceCv.width,faceCv.height);
+      gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform2f(resL,faceCv.width,faceCv.height);
+      gl.bindBuffer(gl.ARRAY_BUFFER,pb); gl.bufferData(gl.ARRAY_BUFFER,pos,gl.DYNAMIC_DRAW);
+      gl.vertexAttribPointer(pL,2,gl.FLOAT,false,0,0);
+      gl.drawElements(gl.TRIANGLES,idx.length,gl.UNSIGNED_SHORT,0);
+    };
+  }
+  // only the person stretches; the blue circle behind is plain CSS and stays put
+  const person=new Image(); person.src='/person.png';
+  const loaded=im=>im.complete&&im.naturalWidth ? Promise.resolve() : new Promise(r=>im.addEventListener('load',r,{once:true}));
+  if (gl) Promise.all([loaded(faceImg),loaded(person)]).then(initFace);
+
+  /* ---------- subscribe ---------- */
+  const subForm=document.getElementById('subForm'), subNote=document.getElementById('subNote');
+  // signups are emailed privately through FormSubmit; the inbox is assembled here so it isn't plain text in the page
+  // (swap SUB_ID for FormSubmit's random alias once it's activated)
+  const SUB_ID=['stonewall150','gmail.com'].join('@');
+  subForm.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const btn=subForm.querySelector('button'), email=subForm.email.value.trim();
+    btn.disabled=true; subNote.textContent='Sending…';
+    try{
+      const r=await fetch('https://formsubmit.co/ajax/'+SUB_ID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({email,_subject:'New subscriber on stevenjacobs.com',_template:'table',_captcha:'false'})});
+      if (!r.ok) throw 0;
+      subNote.textContent='Thanks! You\'re on the list.'; subForm.reset();
+    }catch(_){ subNote.textContent='Something went wrong. Please try again.'; }
+    btn.disabled=false;
+  });
+
+  /* ---------- nav border once scrolled ---------- */
+  const navEl=document.querySelector('nav');
+  addEventListener('scroll',()=>navEl.classList.toggle('scrolled',scrollY>10),{passive:true});
+
   /* ---------- reveal on scroll ---------- */
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.15});
   document.querySelectorAll('.reveal').forEach((el,k)=>{ el.style.transitionDelay=(k%3)*0.08+'s'; io.observe(el); });
@@ -703,6 +891,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
     if (scrollY < innerHeight) nameFx();
     draw(t);
+    if (faceStep && scrollY < innerHeight) faceStep();
     requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
