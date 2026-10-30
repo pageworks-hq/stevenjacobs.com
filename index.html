@@ -92,13 +92,14 @@
 <style>
 :root{
   --bg:#0b0b0c; --fg:#f2efe9; --muted:#8a877f; --line:#232325; --accent:#ff5a1f; --card:#121214;
+  --logo-filter:grayscale(1) brightness(0) invert(1);
   --serif:"Instrument Serif",Georgia,serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
 }
 @media (prefers-color-scheme: light){
-  :root:not([data-theme="dark"]){--bg:#f4f1ea; --fg:#141413; --muted:#6f6c66; --line:#dcd7cc; --accent:#e5470f; --card:#ebe7dd;}
+  :root:not([data-theme="dark"]){--bg:#f4f1ea; --fg:#141413; --muted:#6f6c66; --line:#dcd7cc; --accent:#e5470f; --card:#ebe7dd; --logo-filter:grayscale(1) brightness(0);}
 }
-:root[data-theme="light"]{--bg:#f4f1ea; --fg:#141413; --muted:#6f6c66; --line:#dcd7cc; --accent:#e5470f; --card:#ebe7dd;}
-:root[data-theme="dark"]{--bg:#0b0b0c; --fg:#f2efe9; --muted:#8a877f; --line:#232325; --accent:#ff5a1f; --card:#121214;}
+:root[data-theme="light"]{--bg:#f4f1ea; --fg:#141413; --muted:#6f6c66; --line:#dcd7cc; --accent:#e5470f; --card:#ebe7dd; --logo-filter:grayscale(1) brightness(0);}
+:root[data-theme="dark"]{--bg:#0b0b0c; --fg:#f2efe9; --muted:#8a877f; --line:#232325; --accent:#ff5a1f; --card:#121214; --logo-filter:grayscale(1) brightness(0) invert(1);}
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -163,9 +164,17 @@ nav .links a:not(.btn-blog):hover::after{width:100%}
 .face-hint{margin-top:14px;text-align:center;font:500 11px var(--mono);letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
 .press{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
 .press-lbl{font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.press ul{list-style:none;display:flex;flex-wrap:wrap;gap:10px 30px}
-.press li{font-family:var(--serif);font-size:clamp(19px,1.7vw,24px);color:var(--muted);transition:color .3s}
-.press li:hover{color:var(--fg)}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;width:max-content;animation:press 50s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.track ul{list-style:none;display:flex;align-items:center;gap:56px;padding-right:56px;height:40px}
+.track img{display:block;width:auto;filter:var(--logo-filter);opacity:.55;transition:opacity .3s}
+.track li:hover img,.track .wm:hover{opacity:1}
+.wm{color:var(--fg);opacity:.55;white-space:nowrap;transition:opacity .3s}
+.wm-complex{font:800 24px var(--sans);letter-spacing:.02em;text-transform:uppercase}
+.wm-grammy{font:600 25px Georgia,serif;letter-spacing:.14em}
+.wm-stereogum{font:700 25px var(--sans);letter-spacing:-.03em;text-transform:lowercase}
+@keyframes press{to{transform:translateX(-50%)}}
 .cursor.grab{width:64px;height:64px}
 .cursor.grab .label{opacity:1;color:var(--fg)}
 @media (max-width:900px){
@@ -356,9 +365,28 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
     <div class="press">
       <p class="press-lbl">My businesses have been featured in</p>
-      <ul>
-        <li>The New Yorker</li><li>Forbes</li><li>Business Insider</li><li>TIME</li><li>The Atlantic</li><li>VICE</li><li>Variety</li><li>BuzzFeed</li><li>Rolling Stone</li><li>The Hollywood Reporter</li><li>Billboard</li><li>Complex</li><li>Pitchfork</li><li>GRAMMY</li><li>NME</li><li>Stereogum</li>
-      </ul>
+      <div class="marquee" id="press">
+        <div class="track">
+          <ul>
+            <li><img src="/press/newyorker.svg" alt="The New Yorker" style="height:22px" loading="lazy"></li>
+            <li><img src="/press/forbes.svg" alt="Forbes" style="height:26px" loading="lazy"></li>
+            <li><img src="/press/businessinsider.svg" alt="Business Insider" style="height:18px" loading="lazy"></li>
+            <li><img src="/press/time.svg" alt="TIME" style="height:26px" loading="lazy"></li>
+            <li><img src="/press/atlantic.svg" alt="The Atlantic" style="height:30px" loading="lazy"></li>
+            <li><img src="/press/vice.svg" alt="VICE" style="height:26px" loading="lazy"></li>
+            <li><img src="/press/variety.svg" alt="Variety" style="height:26px" loading="lazy"></li>
+            <li><img src="/press/buzzfeed.svg" alt="BuzzFeed" style="height:22px" loading="lazy"></li>
+            <li><img src="/press/rollingstone.svg" alt="Rolling Stone" style="height:28px" loading="lazy"></li>
+            <li><img src="/press/thr.svg" alt="The Hollywood Reporter" style="height:32px" loading="lazy"></li>
+            <li><img src="/press/billboard.svg" alt="Billboard" style="height:26px" loading="lazy"></li>
+            <li class="wm wm-complex">Complex</li>
+            <li><img src="/press/pitchfork.svg" alt="Pitchfork" style="height:26px" loading="lazy"></li>
+            <li class="wm wm-grammy">GRAMMY</li>
+            <li><img src="/press/nme.svg" alt="NME" style="height:26px" loading="lazy"></li>
+            <li class="wm wm-stereogum">Stereogum</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="wave-slot" id="waveSlot" aria-hidden="true"></div>
@@ -817,11 +845,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       e.preventDefault(); faceImg.setPointerCapture(e.pointerId);
       const [x,y]=local(e); grab={gx:x,gy:y,x,y};
     });
+    let hov=null, last=null;
     faceImg.addEventListener('pointermove',e=>{
       cur.classList.toggle('grab', !!grab || opaque(e)); lab.textContent='PULL';
+      const [x,y]=local(e);
       if (grab){ [grab.x,grab.y]=local(e); dirty=true; }
+      // just hovering smears the skin along with the cursor, then it wobbles back
+      else if (last){ hov={x,y,dx:(hov?hov.dx:0)+x-last[0],dy:(hov?hov.dy:0)+y-last[1]}; dirty=true; }
+      last=[x,y];
     });
-    faceImg.addEventListener('pointerleave',()=>{ if (!grab) cur.classList.remove('grab'); });
+    faceImg.addEventListener('pointerleave',()=>{ last=null; if (!grab) cur.classList.remove('grab'); });
     const release=()=>{ if (!grab) return; boing(Math.min(1,Math.hypot(grab.x-grab.gx,grab.y-grab.gy)/iw)); grab=null; cur.classList.remove('grab'); };
     faceImg.addEventListener('pointerup',release); faceImg.addEventListener('pointercancel',release);
 
@@ -836,6 +869,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         // widen the falloff with the pull so the skin stretches instead of folding over itself
         const sig=Math.max(iw*.16, Math.hypot(dx,dy)*.62); s2=sig*sig*2;
       }
+      if (hov && !grab){
+        const hs=iw*.13, h2=hs*hs*2, cap=iw*.06;
+        const hx=Math.max(-cap,Math.min(cap,hov.dx)), hy=Math.max(-cap,Math.min(cap,hov.dy));
+        for (let k=0;k<cnt*2;k+=2){
+          const ex=pos[k]-hov.x, ey=pos[k+1]-hov.y, w=Math.exp(-(ex*ex+ey*ey)/h2);
+          vel[k]+=hx*w*.45; vel[k+1]+=hy*w*.45;
+        }
+      }
+      hov=null;
       const stiff=grab?.3:.1, damp=grab?.5:.84;
       let moving=0;
       for (let k=0;k<cnt*2;k+=2){
@@ -876,6 +918,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     }catch(_){ subNote.textContent='Something went wrong. Please try again.'; }
     btn.disabled=false;
   });
+
+  /* ---------- press strip: second copy of the logos makes the scroll loop seamless ---------- */
+  const pressTrack=document.querySelector('#press .track'), pressCopy=pressTrack.firstElementChild.cloneNode(true);
+  pressCopy.setAttribute('aria-hidden','true'); pressTrack.appendChild(pressCopy);
 
   /* ---------- nav border once scrolled ---------- */
   const navEl=document.querySelector('nav');
