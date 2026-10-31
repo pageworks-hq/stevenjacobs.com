@@ -255,6 +255,27 @@ h2 em{color:var(--accent)}
 .venture svg{width:22px;height:22px}
 .more-btn{flex:none;font:800 11px var(--wide);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;padding:13px 18px;border:1.5px solid var(--fg);border-radius:6px;box-shadow:0 3px 0 var(--fg);transition:transform .2s,box-shadow .2s,background .3s,color .3s}
 .more-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 var(--fg);background:var(--fg);color:var(--bg)}
+/* favorite tweets: filter tabs in the panel header, embeds in columns */
+#tweets{padding:140px 0 0}
+.panel-head .tabs{margin-left:auto;display:flex;align-items:stretch;background:var(--card);border-left:1px solid var(--line)}
+.tabs button{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:none;border:0;border-left:1px solid var(--line);padding:0 14px;display:flex;align-items:center;gap:6px;transition:color .3s,background .3s}
+.tabs button:first-child{border-left:0}
+.tabs button:hover{color:var(--fg)}
+.tabs button[aria-pressed="true"]{color:#fff;background:var(--accent)}
+.tabs button sup{font-size:9px;opacity:.7}
+.tweets{columns:3 300px;column-gap:20px;padding:24px 30px 8px}
+.tw{break-inside:avoid;margin-bottom:20px}
+.tw[hidden]{display:none}
+.tw .twitter-tweet{margin:0!important}
+.tw>blockquote{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--bg);font-size:15px;line-height:1.5}
+.tw>blockquote a{color:var(--muted);font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;display:inline-block;margin-top:10px}
+.tw .cat{display:inline-block;margin-bottom:8px;font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+@media (max-width:900px){
+  .panel-head{height:auto;flex-wrap:wrap}
+  .panel-head .tabs{margin-left:0;width:100%;border-left:0;border-top:1px solid var(--line);overflow-x:auto}
+  .tabs button{padding:12px 14px;white-space:nowrap}
+  .tweets{padding:16px 12px 0}
+}
 /* about: text on the left, a captioned figure on the right */
 #about{padding:0}
 .about{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;padding:60px}
@@ -525,10 +546,28 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
     </div>
   </section>
 
+  <section id="tweets">
+    <div class="wrap">
+      <div class="panel reveal">
+        <div class="panel-head"><span class="no">03</span><h2>Favorite tweets</h2><div class="tabs" role="group" aria-label="Filter tweets"><button type="button" data-cat="all" aria-pressed="true">All<sup>8</sup></button><button type="button" data-cat="business" aria-pressed="false">Business<sup>3</sup></button><button type="button" data-cat="ai" aria-pressed="false">AI &amp; Tech<sup>3</sup></button><button type="button" data-cat="funny" aria-pressed="false">Funny<sup>1</sup></button><button type="button" data-cat="music" aria-pressed="false">Music<sup>1</sup></button></div></div>
+        <div class="tweets" id="tweetGrid">
+          <div class="tw" data-cat="business"><span class="cat">Business</span><blockquote class="twitter-tweet" data-dnt="true"><p>How to build a personal brand on 𝕏. Full crash course.</p>&mdash; Ryan (@ryangrowthh) <a href="https://twitter.com/ryangrowthh/status/2115618441571013084">View on X</a></blockquote></div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span><blockquote class="twitter-tweet" data-dnt="true"><p>UPDATE: I hired @Muse to sue someone on my behalf. I won. Well, they caved.</p>&mdash; Phillip Jackson (@philwinkle) <a href="https://twitter.com/philwinkle/status/2116180121447014434">View on X</a></blockquote></div>
+          <div class="tw" data-cat="music"><span class="cat">Music</span><blockquote class="twitter-tweet" data-dnt="true"><p>6 years later and this DJ set still goes hard</p>&mdash; internet archiva (@internetarchiva) <a href="https://twitter.com/internetarchiva/status/2116166464302661772">View on X</a></blockquote></div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span><blockquote class="twitter-tweet" data-dnt="true"><p>this is the easiest money on youtube right now: faceless 3D shorts.</p>&mdash; Dumble (@Y0urDumble) <a href="https://twitter.com/Y0urDumble/status/2114798387249717600">View on X</a></blockquote></div>
+          <div class="tw" data-cat="funny"><span class="cat">Funny</span><blockquote class="twitter-tweet" data-dnt="true"><p>OTP animation you never knew you wanted. Until now.</p>&mdash; Breeje Anadkat (@BreejeAnadkat) <a href="https://twitter.com/BreejeAnadkat/status/2116475202188227030">View on X</a></blockquote></div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span><blockquote class="twitter-tweet" data-dnt="true"><p>Power&#x27;s out, internet&#x27;s down. Survival LLM runs entirely on your own computer with no internet.</p>&mdash; 0xMarioNawfal (@RoundtableSpace) <a href="https://twitter.com/RoundtableSpace/status/2115394394379403288">View on X</a></blockquote></div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span><blockquote class="twitter-tweet" data-dnt="true"><p>These accounts are an infinite view glitch. 33.2M views with 6 videos.</p>&mdash; Ernesto Lopez (@ErnestoSOFTWARE) <a href="https://twitter.com/ErnestoSOFTWARE/status/2115442722660037110">View on X</a></blockquote></div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span><blockquote class="twitter-tweet" data-dnt="true"><p>Under the Hood now shows you which posts received a visibility-limiting label.</p>&mdash; X Open Source (@XOpenSource) <a href="https://twitter.com/XOpenSource/status/2116262141745565826">View on X</a></blockquote></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="writing">
     <div class="wrap">
       <div class="panel posts-wrap reveal">
-        <div class="panel-head"><span class="no">03</span><h2>Blog</h2></div>
+        <div class="panel-head"><span class="no">04</span><h2>Blog</h2></div>
           <a class="post" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/" data-cursor="READ" data-preview="Semi-active income." data-color="#ff5a1f">
             <span class="when"><span class="yr">2026</span><span class="mo">Aug</span></span>
             <div><h4>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h4><p class="ex">Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: low startup costs, recurring revenue, and margins that make your hours worth $100–$500 each.</p></div>
@@ -552,7 +591,7 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 
   <section class="contact" id="contact">
     <div class="wrap">
-      <div class="eyebrow reveal" style="justify-content:center">04 · Contact</div>
+      <div class="eyebrow reveal" style="justify-content:center">05 · Contact</div>
       <h2 class="reveal">Say <em>hello.</em></h2>
       <a class="big-link magnet reveal" href="https://x.com/StevenJacobs" target="_blank" rel="noopener" data-cursor="DM ME">
         <span class="handle">@StevenJacobs</span><span>↗</span>
@@ -1030,6 +1069,28 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
     }catch(_){ subNote.textContent='Something went wrong. Please try again.'; }
     btn.disabled=false;
   });
+
+  /* ---------- favorite tweets: filter tabs, X embeds loaded when the section gets close ---------- */
+  const tGrid=document.getElementById('tweetGrid'), tSrc=tGrid.innerHTML;
+  document.querySelectorAll('#tweets .tabs button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('#tweets .tabs button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    tGrid.querySelectorAll('.tw').forEach(t=>t.hidden=b.dataset.cat!=='all'&&t.dataset.cat!==b.dataset.cat);
+  }));
+  const tTheme=()=>document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+  let tLoaded=false;
+  function renderTweets(){
+    tGrid.querySelectorAll('blockquote.twitter-tweet').forEach(q=>q.dataset.theme=tTheme());
+    if (window.twttr&&twttr.widgets) twttr.widgets.load(tGrid);
+  }
+  new IntersectionObserver((es,o)=>{ if (!es[0].isIntersecting) return; o.disconnect(); tLoaded=true;
+    const sc=document.createElement('script'); sc.src='https://platform.twitter.com/widgets.js'; sc.async=true; sc.charset='utf-8';
+    sc.onload=renderTweets; document.head.appendChild(sc); renderTweets();
+  },{rootMargin:'600px'}).observe(tGrid);
+  // embeds can't change theme in place, so redraw them when the theme flips
+  new MutationObserver(()=>{ if (!tLoaded) return;
+    const on=document.querySelector('#tweets .tabs [aria-pressed="true"]');
+    tGrid.innerHTML=tSrc; renderTweets(); if (on) on.click();
+  }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
   /* ---------- press and ventures strips: a second copy of the list makes the scroll loop seamless ---------- */
   document.querySelectorAll('#press .track, #ventures .track').forEach(track=>{
