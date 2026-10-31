@@ -238,6 +238,9 @@ h2 em{color:var(--accent)}
 .proj .art{flex:1;display:grid;place-items:center;padding:22px 0}
 .proj .art svg{width:116px;height:116px;color:var(--fg);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 .proj:hover .art svg{transform:translateY(-6px) rotate(-4deg) scale(1.06)}
+/* the Rave Jesus logo lights up like its neon sign */
+.proj .art svg.neon{transition:transform .5s cubic-bezier(.2,.8,.2,1),color .3s,filter .3s}
+.proj:hover .art svg.neon{color:#ffc21a;filter:drop-shadow(0 0 4px #ffb300) drop-shadow(0 0 12px rgba(255,170,0,.6))}
 .proj .foot{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
 .proj h3{font:800 21px/1.1 var(--wide);font-stretch:125%;letter-spacing:-.01em}
 .proj p{color:var(--muted);margin-top:6px;font-size:14px}
@@ -473,7 +476,7 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
         <div class="projects">
           <a class="proj" href="https://www.ravejesus.com/" target="_blank" rel="noopener" data-cursor="VISIT">
             <div class="num"><span>RJ-01</span><span>Music</span></div>
-            <div class="art"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 70V58a36 36 0 0 1 72 0v12"/><rect x="14" y="64" width="18" height="32" rx="6" fill="currentColor"/><rect x="88" y="64" width="18" height="32" rx="6" fill="currentColor"/><path d="M60 46v52M48 60h24" stroke-width="7"/><path d="M42 86q-6-8 0-16M78 86q6-8 0-16" stroke-width="3.5"/></svg></div>
+            <div class="art"><svg class="neon" viewBox="60 40 280 330" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><mask id="rjm"><rect width="400" height="400" fill="#fff"/><path d="M168 282L282 236L298 266L184 312Z" fill="#000" stroke="#000" stroke-width="20"/></mask></defs><circle cx="190" cy="160" r="102" mask="url(#rjm)"/><path d="M122 186a68 68 0 0 1 136 0"/><path d="M122 186q-2 8 6 8M258 186q2 8-6 8"/><ellipse cx="163" cy="207" rx="9" ry="27"/><ellipse cx="229" cy="207" rx="9" ry="27"/><path d="M174 284L282 240L296 266"/><path d="M174 284L190 306L204 356L222 318L244 352L258 310L284 340L296 266"/></svg></div>
             <div class="foot"><div><h3>Rave Jesus</h3><p>Christian artist</p></div><span class="arrow">→</span></div>
           </a>
           <a class="proj" href="https://anothernine.com/pages/austin-tx" target="_blank" rel="noopener" data-cursor="VISIT">
