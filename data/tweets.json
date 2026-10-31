@@ -1,5 +1,25 @@
 [
  {
+  "id": "2116337353904288234",
+  "name": "おかぴ｜@AI副業40代会社員",
+  "handle": "okapi_fukugyo",
+  "avatar": "https://pbs.twimg.com/profile_images/1994400174953889792/OWCgxv1r_normal.jpg",
+  "verified": true,
+  "text": "Anthropic公式が、AIの『ウェブデザイン問題』を終わらせにきた。\n\nその名は「Frontend Design」。\n\n・GitHubで18.5万スター\n・インストール数は約110万\n・誰でも使える形で、Anthropicが公開\n\nAIにウェブサイトを頼むと、毎回同じものが出てくる。\n\n→ 毎回同じような文字\n→ 紫のグラデーション\n→",
+  "date": "2026-10-31",
+  "likes": 1893,
+  "media": [
+   {
+    "type": "video",
+    "poster": "https://pbs.twimg.com/amplify_video_thumb/2116335109058240512/img/EXrg2kpzDqgrvuAv.jpg",
+    "src": "https://video.twimg.com/amplify_video/2116335109058240512/vid/avc1/640x360/-UB9NDkJWI9EG1rC.mp4",
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "cat": "business"
+ },
+ {
   "id": "2116248774310080725",
   "name": "Chris - Local SEO",
   "handle": "ChrisSimpson",
