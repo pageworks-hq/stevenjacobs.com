@@ -793,7 +793,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     const sh=(type,src)=>{ const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; };
     const prog=gl.createProgram();
     gl.attachShader(prog,sh(gl.VERTEX_SHADER,'attribute vec2 p;attribute vec2 uv;uniform vec2 res;varying vec2 v;void main(){v=uv;vec2 c=p/res*2.-1.;gl_Position=vec4(c.x,-c.y,0.,1.);}'));
-    gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,'precision mediump float;uniform sampler2D t,t2;uniform float mx;varying vec2 v;void main(){gl_FragColor=mix(texture2D(t,v),texture2D(t2,v),mx);}'));
+    // dizzy: twist the picture around each of your own eyes into a spiral (eye centres in image pixels)
+    gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,
+      'precision mediump float;uniform sampler2D t,t2;uniform float mx,sw,tm;varying vec2 v;'+
+      'vec2 tw(vec2 p,vec2 c,float dir){vec2 d=p-c;float f=1.-smoothstep(0.,17.,length(d));float a=dir*sw*f*f*(6.+5.*tm);float s=sin(a),k=cos(a);return c+vec2(k*d.x-s*d.y,s*d.x+k*d.y);}'+
+      'void main(){vec2 p=v*vec2(323.,384.);p=tw(p,vec2(138.,103.),1.);p=tw(p,vec2(191.,102.),-1.);vec2 u=p/vec2(323.,384.);'+
+      'gl_FragColor=mix(texture2D(t,u),texture2D(t2,u),mx);}'));
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog,gl.LINK_STATUS)) return;
     gl.useProgram(prog);
@@ -824,6 +829,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     });
     gl.uniform1i(gl.getUniformLocation(prog,'t'),0); gl.uniform1i(gl.getUniformLocation(prog,'t2'),1);
     const mxL=gl.getUniformLocation(prog,'mx'); let mx=0, wow=0, ouchT=0;
+    const swL=gl.getUniformLocation(prog,'sw'), tmL=gl.getUniformLocation(prog,'tm'); let sw=0, ouchOn=0, dzT=0, dz0=0;
     gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
     // alpha lookup so only you are grabbable, not the blue circle or the corners
     const ac=document.createElement('canvas'); ac.width=person.naturalWidth; ac.height=person.naturalHeight;
@@ -894,9 +900,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       if (L>.2) ouchT=now+350;
       const ow=now<ouchT?1:0;
       mx+=(ow-mx)*(ow?.35:.15);
-      wow+=(Math.min(1,L/.12)*(1-mx)-wow)*.2;
+      // once the yelling stops you're left dizzy for a bit, eyes spinning
+      if (ow){ ouchOn=ouchOn||now; dzT=0; }
+      else if (ouchOn){ if (now-ouchOn>250){ dzT=now+1900; dz0=now; } ouchOn=0; }
+      const dz=now<dzT?1:0;
+      sw+=(dz-sw)*(dz?.12:.05);
+      wow+=(Math.min(1,L/.12)*(1-mx)*(1-sw)-wow)*.2;
       const bu=wow*iw*.03, jd=wow*iw*.025;
-      let moving=Math.abs(ow-mx)+wow;
+      let moving=Math.abs(ow-mx)+wow+sw+dz;
       const stiff=grab?.3:hov?.2:.1, damp=grab?.5:hov?.62:.84;
       for (let k=0;k<cnt*2;k+=2){
         let tx=rest[k], ty=rest[k+1]-brow[k>>1]*bu+jaw[k>>1]*jd;
@@ -908,7 +919,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       if (!pull && moving<.05){ pos.set(rest); vel.fill(0); dirty=false; }
       gl.viewport(0,0,faceCv.width,faceCv.height);
       gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform2f(resL,faceCv.width,faceCv.height); gl.uniform1f(mxL,mx);
+      gl.uniform2f(resL,faceCv.width,faceCv.height); gl.uniform1f(mxL,mx); gl.uniform1f(swL,sw); gl.uniform1f(tmL,(now-dz0)/1000);
       gl.bindBuffer(gl.ARRAY_BUFFER,pb); gl.bufferData(gl.ARRAY_BUFFER,pos,gl.DYNAMIC_DRAW);
       gl.vertexAttribPointer(pL,2,gl.FLOAT,false,0,0);
       gl.drawElements(gl.TRIANGLES,idx.length,gl.UNSIGNED_SHORT,0);
