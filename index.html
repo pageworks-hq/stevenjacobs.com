@@ -88,12 +88,12 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wdth,wght@125,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0b0c; --fg:#f2efe9; --muted:#8a877f; --line:#232325; --accent:#ff5a1f; --card:#121214;
   --logo-filter:grayscale(1) brightness(0) invert(1);
-  --serif:"Instrument Serif",Georgia,serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"Instrument Serif",Georgia,serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace; --wide:"Archivo","Inter",system-ui,sans-serif;
 }
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){--bg:#f4f1ea; --fg:#141413; --muted:#6f6c66; --line:#dcd7cc; --accent:#e5470f; --card:#ebe7dd; --logo-filter:grayscale(1) brightness(0);}
@@ -220,22 +220,38 @@ h2 em{color:var(--accent)}
 .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
 .reveal.in{opacity:1;transform:none}
 
-/* projects */
-.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;perspective:1200px}
-.proj{position:relative;border:1px solid var(--line);border-radius:22px;padding:30px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;background:var(--card);overflow:hidden;transform-style:preserve-3d;transition:transform .2s ease-out,border-color .4s;isolation:isolate}
-.proj::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),var(--glow),transparent 60%);opacity:0;transition:opacity .4s}
-.proj:hover::before{opacity:1}
-.proj:hover{border-color:var(--glow)}
-.proj .num{font:500 12px var(--mono);color:var(--muted);display:flex;justify-content:space-between}
-.proj .arrow{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:transform .4s,background .4s,border-color .4s;font-size:18px}
-.proj:hover .arrow{transform:rotate(-45deg);background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.proj .soon{margin-bottom:14px;display:inline-flex;align-items:center;gap:8px;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid var(--glow);color:var(--glow)}
-.proj .soon .dot{width:6px;height:6px;border-radius:50%;background:var(--glow);animation:blink 1.4s ease-in-out infinite}
+/* projects: one panel, three columns, a strip of everything else underneath */
+.panel{border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.03),0 18px 40px -24px rgba(0,0,0,.25)}
+.panel-head{display:flex;align-items:stretch;border-bottom:1px solid var(--line);height:44px;background-image:radial-gradient(color-mix(in srgb,var(--fg) 7%,transparent) 1px,transparent 1.2px);background-size:7px 7px}
+.panel-head .no{display:grid;place-items:center;width:44px;background:var(--accent);color:#fff;font:500 11px var(--mono)}
+.panel-head h2{display:flex;align-items:center;padding:0 16px;margin:0;font:800 12px/1 var(--wide);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;background:var(--card)}
+.panel-head .count{margin-left:auto;display:flex;align-items:center;gap:8px;padding:0 16px;border-left:1px solid var(--line);background:var(--card);font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.panel-head .count::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.projects{display:grid;grid-template-columns:repeat(3,1fr)}
+.proj{position:relative;display:flex;flex-direction:column;padding:24px 30px 28px;min-height:330px;transition:background .4s}
+.proj+.proj{border-left:1px solid var(--line)}
+.proj:hover{background:color-mix(in srgb,var(--bg) 55%,var(--card))}
+.proj .num{display:flex;justify-content:space-between;font:400 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.proj .num .live{display:inline-flex;align-items:center;gap:6px;color:var(--accent)}
+.proj .num .live::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 1.4s ease-in-out infinite}
 @keyframes blink{50%{opacity:.2;transform:scale(.6)}}
-.proj .art{height:150px;display:grid;place-items:center;transform:translateZ(50px)}
-.proj h3{font-family:var(--serif);font-weight:400;font-size:44px;line-height:1;transform:translateZ(30px)}
-.proj p{color:var(--muted);margin-top:10px;font-size:15px;transform:translateZ(20px)}
-.proj .loc{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;margin-top:16px;color:var(--fg);opacity:.7}
+.proj .art{flex:1;display:grid;place-items:center;padding:22px 0}
+.proj .art svg{width:116px;height:116px;color:var(--fg);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.proj:hover .art svg{transform:translateY(-6px) rotate(-4deg) scale(1.06)}
+.proj .foot{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.proj h3{font:800 21px/1.1 var(--wide);font-stretch:125%;letter-spacing:-.01em}
+.proj p{color:var(--muted);margin-top:6px;font-size:14px}
+.proj .arrow{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:14px;transition:background .3s,color .3s,border-color .3s,transform .3s}
+.proj:hover .arrow{background:var(--fg);color:var(--bg);border-color:var(--fg);transform:rotate(-45deg)}
+.more{display:flex;align-items:center;gap:24px;padding:18px 30px;border-top:1px solid var(--line)}
+.more .marquee{flex:1;min-width:0}
+.more .track{animation-duration:30s}
+.more .track ul{gap:44px;padding-right:44px;height:44px}
+.venture{display:inline-flex;align-items:center;gap:8px;font:800 15px var(--wide);font-stretch:125%;white-space:nowrap;color:var(--fg);opacity:.7;transition:opacity .3s}
+.venture:hover{opacity:1}
+.venture svg{width:22px;height:22px}
+.more-btn{flex:none;font:800 11px var(--wide);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;padding:13px 18px;border:1.5px solid var(--fg);border-radius:6px;box-shadow:0 3px 0 var(--fg);transition:transform .2s,box-shadow .2s,background .3s,color .3s}
+.more-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 var(--fg);background:var(--fg);color:var(--bg)}
 
 /* art pieces */
 .art svg{width:130px;height:130px;overflow:visible}
@@ -286,7 +302,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 @media (max-width:900px){
   .projects,.quotes{grid-template-columns:1fr}
-  .proj{min-height:240px}
+  .proj{min-height:0}
+  .proj+.proj{border-left:0;border-top:1px solid var(--line)}
+  .panel-head .count span{display:none}
+  .more{flex-direction:column;align-items:stretch;padding:16px 20px}
+  .more-btn{text-align:center}
   .post{grid-template-columns:1fr;gap:10px}
   .post .go{display:none}
   .post .idx{display:none}
@@ -395,36 +415,29 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   <section id="work">
     <div class="wrap">
-      <div class="eyebrow reveal">01 · Projects</div>
-      <h2 class="reveal">Some things I'm <em>working on.</em></h2>
-      <div class="projects">
-        <a class="proj reveal" href="https://www.ravejesus.com/" target="_blank" rel="noopener" style="--glow:#b14bff" data-cursor="VISIT">
-          <div class="num"><span>01 / MUSIC</span><span class="arrow">↗</span></div>
-          <div>
-            <h3>Rave Jesus</h3>
-            <p>Christian Artist</p>
-            <div class="loc">ravejesus.com</div>
-          </div>
-        </a>
-
-        <a class="proj reveal" href="https://anothernine.com/pages/austin-tx" target="_blank" rel="noopener" style="--glow:#2fd17a" data-cursor="VISIT">
-          <div class="num"><span>02 / INDOOR GOLF</span><span class="arrow">↗</span></div>
-          <div>
-            <span class="soon"><span class="dot"></span>Opening soon</span>
-            <h3>Another Nine</h3>
-            <p>Indoor Golf Simulators</p>
-            <div class="loc">Pflugerville, TX · anothernine.com</div>
-          </div>
-        </a>
-
-        <a class="proj reveal" href="https://beachedinn.com/" target="_blank" rel="noopener" style="--glow:#2bb3ff" data-cursor="VISIT">
-          <div class="num"><span>03 / REAL ESTATE</span><span class="arrow">↗</span></div>
-          <div>
-            <h3>Beached Inn</h3>
-            <p>Vacation Rental in Port A</p>
-            <div class="loc">Port Aransas, TX</div>
-          </div>
-        </a>
+      <div class="panel reveal">
+        <div class="panel-head"><span class="no">01</span><h2>Some things I'm working on</h2><span class="count">3 <span>active</span></span></div>
+        <div class="projects">
+          <a class="proj" href="https://www.ravejesus.com/" target="_blank" rel="noopener" data-cursor="VISIT">
+            <div class="num"><span>RJ-01</span><span>Music</span></div>
+            <div class="art"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 70V58a36 36 0 0 1 72 0v12"/><rect x="14" y="64" width="18" height="32" rx="6" fill="currentColor"/><rect x="88" y="64" width="18" height="32" rx="6" fill="currentColor"/><path d="M60 46v52M48 60h24" stroke-width="7"/><path d="M42 86q-6-8 0-16M78 86q6-8 0-16" stroke-width="3.5"/></svg></div>
+            <div class="foot"><div><h3>Rave Jesus</h3><p>Christian artist</p></div><span class="arrow">→</span></div>
+          </a>
+          <a class="proj" href="https://anothernine.com/pages/austin-tx" target="_blank" rel="noopener" data-cursor="VISIT">
+            <div class="num"><span>AN-02</span><span><span class="live">Opening soon</span></span></div>
+            <div class="art"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M50 96V18"/><path d="M50 20l38 14-38 14z" fill="currentColor"/><ellipse cx="50" cy="98" rx="30" ry="7"/><path d="M14 108h92" stroke-width="3.5"/><circle cx="88" cy="84" r="10"/><circle cx="85" cy="81" r="1.3" fill="currentColor" stroke="none"/><circle cx="91" cy="82" r="1.3" fill="currentColor" stroke="none"/><circle cx="88" cy="88" r="1.3" fill="currentColor" stroke="none"/></svg></div>
+            <div class="foot"><div><h3>Another Nine</h3><p>Indoor golf simulators</p></div><span class="arrow">→</span></div>
+          </a>
+          <a class="proj" href="https://beachedinn.com/" target="_blank" rel="noopener" data-cursor="VISIT">
+            <div class="num"><span>BI-03</span><span>Port A, TX</span></div>
+            <div class="art"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="88" cy="28" r="10" fill="currentColor"/><path d="M88 8v2M108 28h-2M102 14l-2 2M102 42l-2-2" stroke-width="3.5"/><path d="M18 58l32-26 32 26"/><path d="M26 52v36h48V52"/><rect x="43" y="66" width="14" height="22" fill="currentColor"/><path d="M10 98q8-6 16 0t16 0 16 0 16 0 16 0 16 0 16 0"/><path d="M22 108q8-6 16 0t16 0 16 0 16 0 16 0" stroke-width="3.5"/></svg></div>
+            <div class="foot"><div><h3>Beached Inn</h3><p>Vacation rental on the beach</p></div><span class="arrow">→</span></div>
+          </a>
+        </div>
+        <div class="more">
+          <div class="marquee" id="ventures"><div class="track"><ul><li><span class="venture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Amazon FBA</span></li><li><span class="venture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>Apps</span></li><li><span class="venture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>Websites</span></li><li><span class="venture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>YouTube</span></li><li><span class="venture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Real Estate</span></li><li><span class="venture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Investing</span></li><li><span class="venture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Music</span></li></ul></div></div>
+          <a class="more-btn" href="/blog/">+ More on the blog &rarr;</a>
+        </div>
       </div>
     </div>
   </section>
@@ -758,16 +771,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     el.addEventListener('pointerleave',()=> el.style.transform='');
   });
 
-  /* ---------- project tilt + spotlight ---------- */
-  document.querySelectorAll('.proj').forEach(el=>{
-    el.addEventListener('pointermove',e=>{
-      const r=el.getBoundingClientRect(), px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
-      el.style.setProperty('--mx',px*100+'%'); el.style.setProperty('--my',py*100+'%');
-      el.style.transform=`rotateY(${(px-.5)*14}deg) rotateX(${(.5-py)*14}deg) translateZ(0)`;
-    });
-    el.addEventListener('pointerleave',()=> el.style.transform='');
-  });
-
   /* ---------- post hover preview ---------- */
   const pv=document.getElementById('preview');
   let pvx=0,pvy=0;
@@ -949,9 +952,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     btn.disabled=false;
   });
 
-  /* ---------- press strip: second copy of the logos makes the scroll loop seamless ---------- */
-  const pressTrack=document.querySelector('#press .track'), pressCopy=pressTrack.firstElementChild.cloneNode(true);
-  pressCopy.setAttribute('aria-hidden','true'); pressTrack.appendChild(pressCopy);
+  /* ---------- press and ventures strips: a second copy of the list makes the scroll loop seamless ---------- */
+  document.querySelectorAll('#press .track, #ventures .track').forEach(track=>{
+    const copy=track.firstElementChild.cloneNode(true);
+    copy.setAttribute('aria-hidden','true'); track.appendChild(copy);
+  });
 
   /* ---------- nav border once scrolled ---------- */
   const navEl=document.querySelector('nav');
