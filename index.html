@@ -255,7 +255,7 @@ h2 em{color:var(--accent)}
 .venture svg{width:22px;height:22px}
 .more-btn{flex:none;font:800 11px var(--wide);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;padding:13px 18px;border:1.5px solid var(--fg);border-radius:6px;box-shadow:0 3px 0 var(--fg);transition:transform .2s,box-shadow .2s,background .3s,color .3s}
 .more-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 var(--fg);background:var(--fg);color:var(--bg)}
-/* favorite tweets: filter tabs in the panel header, embeds in columns */
+/* favorite tweets: filter tabs in the panel header, our own tweet cards in columns */
 #tweets{padding:140px 0 0}
 .panel-head .tabs{margin-left:auto;display:flex;align-items:stretch;background:var(--card);border-left:1px solid var(--line)}
 .tabs button{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:none;border:0;border-left:1px solid var(--line);padding:0 14px;display:flex;align-items:center;gap:6px;transition:color .3s,background .3s}
@@ -266,9 +266,29 @@ h2 em{color:var(--accent)}
 .tweets{columns:3 300px;column-gap:20px;padding:24px 30px 8px}
 .tw{break-inside:avoid;margin-bottom:20px}
 .tw[hidden]{display:none}
-.tw .twitter-tweet{margin:0!important}
-.tw>blockquote{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--bg);font-size:15px;line-height:1.5}
-.tw>blockquote a{color:var(--muted);font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;display:inline-block;margin-top:10px}
+.tc{border:1px solid var(--line);border-radius:14px;background:var(--bg);padding:16px;font-size:15px;line-height:1.45}
+.tc header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tc-av{width:40px;height:40px;border-radius:50%;flex:none}
+.tc header div{display:flex;flex-direction:column;min-width:0;flex:1}
+.tc header b{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc header span{color:var(--muted);font-size:13px}
+.tc-tick{display:inline-grid;place-items:center;width:15px;height:15px;margin-left:4px;border-radius:50%;background:#1d9bf0;color:#fff;font-size:9px;vertical-align:1px}
+.tc-x{width:18px;height:18px;color:var(--fg);flex:none}
+.tc p{white-space:normal;word-wrap:break-word}
+.tc p a{color:#1d9bf0;text-decoration:none}
+.tc p a:hover{text-decoration:underline}
+.tc-media{display:grid;gap:2px;margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tc-media.n2{grid-template-columns:1fr 1fr}
+.tc-vid{position:relative;display:block;width:100%;padding:0;border:0;background:#000;cursor:pointer}
+.tc-vid i{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:#1d9bf0;box-shadow:0 0 0 4px rgba(255,255,255,.9);transition:transform .2s}
+.tc-vid i::after{content:"";position:absolute;left:23px;top:18px;border-style:solid;border-width:11px 0 11px 17px;border-color:transparent transparent transparent #fff}
+.tc-vid:hover i{transform:scale(1.08)}
+.tc-vid.loading i{animation:blink 1s ease-in-out infinite}
+.tc-media img,.tc-media video{display:block;width:100%;height:auto;max-height:520px;object-fit:cover;background:#000}
+.tc-media.n2 img{aspect-ratio:1;height:100%}
+.tc footer{display:flex;gap:14px;align-items:center;margin-top:12px;font:500 11px var(--mono);letter-spacing:.04em;color:var(--muted)}
+.tc footer a{margin-left:auto;color:var(--fg);text-decoration:none}
+.tc footer a:hover{color:var(--accent)}
 .tw .cat{display:inline-block;margin-bottom:8px;font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 @media (max-width:900px){
   .panel-head{height:auto;flex-wrap:wrap}
@@ -551,16 +571,86 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
       <div class="panel reveal">
         <div class="panel-head"><span class="no">03</span><h2>Favorite tweets</h2><div class="tabs" role="group" aria-label="Filter tweets"><button type="button" data-cat="all" aria-pressed="true">All<sup>10</sup></button><button type="button" data-cat="business" aria-pressed="false">Business<sup>3</sup></button><button type="button" data-cat="ai" aria-pressed="false">AI &amp; Tech<sup>3</sup></button><button type="button" data-cat="funny" aria-pressed="false">Funny<sup>1</sup></button><button type="button" data-cat="music" aria-pressed="false">Music<sup>1</sup></button><button type="button" data-cat="sports" aria-pressed="false">Sports<sup>1</sup></button><button type="button" data-cat="family" aria-pressed="false">Family<sup>1</sup></button></div></div>
         <div class="tweets" id="tweetGrid">
-          <div class="tw" data-cat="family"><span class="cat">Family</span><blockquote class="twitter-tweet" data-dnt="true"><p>I think about this image often. Be present. Your kids just want you. Give them PRESENCE over PRESENTS.</p>&mdash; Tyler Todt (@tyromper) <a href="https://twitter.com/tyromper/status/2114072054869934089">View on X</a></blockquote></div>
-          <div class="tw" data-cat="sports"><span class="cat">Sports</span><blockquote class="twitter-tweet" data-dnt="true"><p>This shot of Arch Manning will go down as one of the coolest shots in college football history</p>&mdash; Jon Root (@JonnyRoot_) <a href="https://twitter.com/JonnyRoot_/status/2114208054225019265">View on X</a></blockquote></div>
-          <div class="tw" data-cat="business"><span class="cat">Business</span><blockquote class="twitter-tweet" data-dnt="true"><p>How to build a personal brand on 𝕏. Full crash course.</p>&mdash; Ryan (@ryangrowthh) <a href="https://twitter.com/ryangrowthh/status/2115618441571013084">View on X</a></blockquote></div>
-          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span><blockquote class="twitter-tweet" data-dnt="true"><p>UPDATE: I hired @Muse to sue someone on my behalf. I won. Well, they caved.</p>&mdash; Phillip Jackson (@philwinkle) <a href="https://twitter.com/philwinkle/status/2116180121447014434">View on X</a></blockquote></div>
-          <div class="tw" data-cat="music"><span class="cat">Music</span><blockquote class="twitter-tweet" data-dnt="true"><p>6 years later and this DJ set still goes hard</p>&mdash; internet archiva (@internetarchiva) <a href="https://twitter.com/internetarchiva/status/2116166464302661772">View on X</a></blockquote></div>
-          <div class="tw" data-cat="business"><span class="cat">Business</span><blockquote class="twitter-tweet" data-dnt="true"><p>this is the easiest money on youtube right now: faceless 3D shorts.</p>&mdash; Dumble (@Y0urDumble) <a href="https://twitter.com/Y0urDumble/status/2114798387249717600">View on X</a></blockquote></div>
-          <div class="tw" data-cat="funny"><span class="cat">Funny</span><blockquote class="twitter-tweet" data-dnt="true"><p>OTP animation you never knew you wanted. Until now.</p>&mdash; Breeje Anadkat (@BreejeAnadkat) <a href="https://twitter.com/BreejeAnadkat/status/2116475202188227030">View on X</a></blockquote></div>
-          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span><blockquote class="twitter-tweet" data-dnt="true"><p>Power&#x27;s out, internet&#x27;s down. Survival LLM runs entirely on your own computer with no internet.</p>&mdash; 0xMarioNawfal (@RoundtableSpace) <a href="https://twitter.com/RoundtableSpace/status/2115394394379403288">View on X</a></blockquote></div>
-          <div class="tw" data-cat="business"><span class="cat">Business</span><blockquote class="twitter-tweet" data-dnt="true"><p>These accounts are an infinite view glitch. 33.2M views with 6 videos.</p>&mdash; Ernesto Lopez (@ErnestoSOFTWARE) <a href="https://twitter.com/ErnestoSOFTWARE/status/2115442722660037110">View on X</a></blockquote></div>
-          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span><blockquote class="twitter-tweet" data-dnt="true"><p>Under the Hood now shows you which posts received a visibility-limiting label.</p>&mdash; X Open Source (@XOpenSource) <a href="https://twitter.com/XOpenSource/status/2116262141745565826">View on X</a></blockquote></div>
+          <div class="tw" data-cat="family"><span class="cat">Family</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1918016200803803136/msWPbgOX_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Tyler Todt<span class="tc-tick" aria-label="Verified">✓</span></b><span>@tyromper</span></div><a class="tc-x" href="https://x.com/tyromper/status/2114072054869934089" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>I think about this image often.<br><br>Be present.<br>Your kids just want you.<br><br>Give them PRESENCE over PRESENTS.</p>
+              <div class="tc-media n1"><a href="https://x.com/tyromper/status/2114072054869934089" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HVaxVHaaoAAexT5.jpg?name=medium" alt="" loading="lazy" width="736" height="736"></a></div>
+              <footer><span>Oct 24, 2026</span><span>♥ 1K</span><a href="https://x.com/tyromper/status/2114072054869934089" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="sports"><span class="cat">Sports</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1417559577957224451/5IxBn6dS_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Jon Root<span class="tc-tick" aria-label="Verified">✓</span></b><span>@JonnyRoot_</span></div><a class="tc-x" href="https://x.com/JonnyRoot_/status/2114208054225019265" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>This shot of Arch Manning will go down as one of the coolest shots in college football history 🔥</p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2114152489482067968/vid/avc1/640x360/mUGgALniHOWelwTE.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2114152489482067968/img/hSVkQA8KUMLX8LHq.jpg?name=medium" alt="" loading="lazy" width="1920" height="1080"><i></i></button></div>
+              <footer><span>Oct 25, 2026</span><span>♥ 2.4K</span><a href="https://x.com/JonnyRoot_/status/2114208054225019265" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2097149271011438592/Q9mfZr5D_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Ryan<span class="tc-tick" aria-label="Verified">✓</span></b><span>@ryangrowthh</span></div><a class="tc-x" href="https://x.com/ryangrowthh/status/2115618441571013084" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>How to build a personal brand on 𝕏.<br><br>Full crash course:<br><br>0:45 Step 1: Crafting your brand<br>2:43 Profile basics: bio, profile picture, banner, CTA<br>3:49 Market research phase<br>4:58 Studying the top 10–20 accounts (formats, messaging, gaps in the market)<br><br>7:01 Step 2: Content pillars <a class="tc-more" href="https://x.com/ryangrowthh/status/2115618441571013084" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2115617534481436672/vid/avc1/640x360/BDcL0FoL8gxJ4JA8.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2115617534481436672/img/9G2DkcQKY02pVJ9G.jpg?name=medium" alt="" loading="lazy" width="1920" height="1080"><i></i></button></div>
+              <footer><span>Oct 29, 2026</span><span>♥ 2.3K</span><a href="https://x.com/ryangrowthh/status/2115618441571013084" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1991646067356532736/jIR5HLJe_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Phillip Jackson<span class="tc-tick" aria-label="Verified">✓</span></b><span>@philwinkle</span></div><a class="tc-x" href="https://x.com/philwinkle/status/2116180121447014434" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>UPDATE: I hired <a href="https://x.com/Muse" target="_blank" rel="noopener">@Muse</a> to sue someone on my behalf. <br><br>I won. Well, they caved.<br><br>Within 20 minutes of being served papers, the company offered a settlement.<br><br>Within ten days, they paid me *with additional compensation* for recovery expenses.<br><br><a href="https://x.com/Muse" target="_blank" rel="noopener">@Muse</a> filed the motion to dismiss, <a class="tc-more" href="https://x.com/philwinkle/status/2116180121447014434" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n2"><a href="https://x.com/philwinkle/status/2116180121447014434" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HV4svQOXYAA1k_r.jpg?name=medium" alt="" loading="lazy" width="1148" height="1004"></a><a href="https://x.com/philwinkle/status/2116180121447014434" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HV4uJmAX0AAZCfm.jpg?name=medium" alt="" loading="lazy" width="1244" height="1236"></a></div>
+              <footer><span>Oct 30, 2026</span><span>♥ 4.7K</span><a href="https://x.com/philwinkle/status/2116180121447014434" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="music"><span class="cat">Music</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1996315098994917376/DOWynyhi_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>internet archiva<span class="tc-tick" aria-label="Verified">✓</span></b><span>@internetarchiva</span></div><a class="tc-x" href="https://x.com/internetarchiva/status/2116166464302661772" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>6 years later and this DJ set still goes hard</p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2116166440726224896/vid/avc1/480x602/TImtXYFxd9R_1Kc4.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2116166440726224896/img/uzSxOxfqeln3vDVI.jpg?name=medium" alt="" loading="lazy" width="612" height="768"><i></i></button></div>
+              <footer><span>Oct 30, 2026</span><span>♥ 25.9K</span><a href="https://x.com/internetarchiva/status/2116166464302661772" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2103962793485475840/yB2v8EZQ_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Dumble<span class="tc-tick" aria-label="Verified">✓</span></b><span>@Y0urDumble</span></div><a class="tc-x" href="https://x.com/Y0urDumble/status/2114798387249717600" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>this is the easiest money on youtube right now<br><br>and it&#x27;s a lifechanging opportunity...<br><br>faceless 3D shorts. clay planets, tiny rome, domino spirals, &quot;you vs a blue whale&quot;<br><br>you&#x27;ve seen them. they&#x27;re everywhere. and almost none of them have an animator<br><br>it&#x27;s one person, Opus 5.5 <a class="tc-more" href="https://x.com/Y0urDumble/status/2114798387249717600" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2114798208396226560/vid/avc1/480x600/R6GcHOeK9Bg_M_VQ.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2114798208396226560/img/Ep3pj6YzWuZiC-fy.jpg?name=medium" alt="" loading="lazy" width="1440" height="1800"><i></i></button></div>
+              <footer><span>Oct 26, 2026</span><span>♥ 1.2K</span><a href="https://x.com/Y0urDumble/status/2114798387249717600" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="funny"><span class="cat">Funny</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1895109155611934720/JGc3u6Ne_normal.png" alt="" width="40" height="40" loading="lazy"><div><b>Breeje Anadkat<span class="tc-tick" aria-label="Verified">✓</span></b><span>@BreejeAnadkat</span></div><a class="tc-x" href="https://x.com/BreejeAnadkat/status/2116475202188227030" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>OTP animation you never knew you wanted. Until now.</p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2116474398702202880/vid/avc1/480x840/zSJY4IV92BZSPljf.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2116474398702202880/img/OIp3E2ERo86Cyc4Y.jpg?name=medium" alt="" loading="lazy" width="982" height="1720"><i></i></button></div>
+              <footer><span>Oct 31, 2026</span><span>♥ 805</span><a href="https://x.com/BreejeAnadkat/status/2116475202188227030" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2012162102283407360/U-fPj6wg_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>0xMarioNawfal<span class="tc-tick" aria-label="Verified">✓</span></b><span>@RoundtableSpace</span></div><a class="tc-x" href="https://x.com/RoundtableSpace/status/2115394394379403288" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Power&#x27;s out, internet&#x27;s down, someone&#x27;s burned. Your AI is useless without a connection.<br><br>Survival LLM runs entirely on your own computer with no internet. Ask how to keep food safe in a blackout, treat a burn or purify water, and it answers from an offline library of medical, <a class="tc-more" href="https://x.com/RoundtableSpace/status/2115394394379403288" target="_blank" rel="noopener">Show more</a></p>
+              
+              <footer><span>Oct 28, 2026</span><span>♥ 828</span><a href="https://x.com/RoundtableSpace/status/2115394394379403288" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1930138018951643136/wEgZY178_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Ernesto Lopez<span class="tc-tick" aria-label="Verified">✓</span></b><span>@ErnestoSOFTWARE</span></div><a class="tc-x" href="https://x.com/ErnestoSOFTWARE/status/2115442722660037110" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>These accounts are an <br>infinite view glitch😭<br><br>33.2M views with 6 videos<br><br>100% simulated with claude opus 5.5<br>I&#x27;ve seen 8 of these accounts now<br><br>none of them are underperforming.<br><br>the Fruit ninja mobile games<br>makes $1,000,000/mo +<br><br>and it has not had a competitor <br>in over 16 <a class="tc-more" href="https://x.com/ErnestoSOFTWARE/status/2115442722660037110" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2115440673960714240/vid/avc1/458x360/qlPNG0D-644m-e56.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2115440673960714240/img/WJnJllwXr9QBSo8S.jpg?name=medium" alt="" loading="lazy" width="2348" height="1840"><i></i></button></div>
+              <footer><span>Oct 28, 2026</span><span>♥ 846</span><a href="https://x.com/ErnestoSOFTWARE/status/2115442722660037110" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2086823682895179776/inMppXhg_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>X Open Source<span class="tc-tick" aria-label="Verified">✓</span></b><span>@XOpenSource</span></div><a class="tc-x" href="https://x.com/XOpenSource/status/2116262141745565826" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Under the Hood now shows you which posts received a visibility-limiting label, making it easier to see what’s affected: <a href="https://x.com/i/jf/under_the…" target="_blank" rel="noopener">x.com/i/jf/under_the…</a><br><br>This was a top request — thanks for the feedback.<br><br>You’ll see the specific posts listed when fewer than 5% of your posts during the <a class="tc-more" href="https://x.com/XOpenSource/status/2116262141745565826" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n1"><a href="https://x.com/XOpenSource/status/2116262141745565826" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HV54YvEXIAA44eX.jpg?name=medium" alt="" loading="lazy" width="1444" height="1302"></a></div>
+              <footer><span>Oct 30, 2026</span><span>♥ 5.9K</span><a href="https://x.com/XOpenSource/status/2116262141745565826" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
         </div>
       </div>
     </div>
@@ -1072,27 +1162,23 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
     btn.disabled=false;
   });
 
-  /* ---------- favorite tweets: filter tabs, X embeds loaded when the section gets close ---------- */
-  const tGrid=document.getElementById('tweetGrid'), tSrc=tGrid.innerHTML;
+  /* ---------- favorite tweets: filter tabs ---------- */
+  const tGrid=document.getElementById('tweetGrid');
   document.querySelectorAll('#tweets .tabs button').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('#tweets .tabs button').forEach(x=>x.setAttribute('aria-pressed',x===b));
     tGrid.querySelectorAll('.tw').forEach(t=>t.hidden=b.dataset.cat!=='all'&&t.dataset.cat!==b.dataset.cat);
   }));
-  const tTheme=()=>document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
-  let tLoaded=false;
-  function renderTweets(){
-    tGrid.querySelectorAll('blockquote.twitter-tweet').forEach(q=>q.dataset.theme=tTheme());
-    if (window.twttr&&twttr.widgets) twttr.widgets.load(tGrid);
-  }
-  new IntersectionObserver((es,o)=>{ if (!es[0].isIntersecting) return; o.disconnect(); tLoaded=true;
-    const sc=document.createElement('script'); sc.src='https://platform.twitter.com/widgets.js'; sc.async=true; sc.charset='utf-8';
-    sc.onload=renderTweets; document.head.appendChild(sc); renderTweets();
-  },{rootMargin:'600px'}).observe(tGrid);
-  // embeds can't change theme in place, so redraw them when the theme flips
-  new MutationObserver(()=>{ if (!tLoaded) return;
-    const on=document.querySelector('#tweets .tabs [aria-pressed="true"]');
-    tGrid.innerHTML=tSrc; renderTweets(); if (on) on.click();
-  }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+  // X refuses to stream its videos into other sites, so fetch the clip without a referrer and play it from memory
+  tGrid.addEventListener('click',async e=>{
+    const b=e.target.closest('.tc-vid'); if (!b||b.classList.contains('loading')) return;
+    b.classList.add('loading');
+    try{
+      const blob=await (await fetch(b.dataset.src,{referrerPolicy:'no-referrer'})).blob();
+      const v=document.createElement('video'); v.controls=true; v.playsInline=true; v.autoplay=true;
+      v.poster=b.querySelector('img').src; v.src=URL.createObjectURL(blob); b.replaceWith(v);
+    }catch(_){ open(b.closest('.tc').querySelector('.tc-x').href,'_blank','noopener'); b.classList.remove('loading'); }
+  });
 
   /* ---------- press and ventures strips: a second copy of the list makes the scroll loop seamless ---------- */
   document.querySelectorAll('#press .track, #ventures .track').forEach(track=>{
