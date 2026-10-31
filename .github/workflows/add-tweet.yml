@@ -27,7 +27,7 @@ jobs:
   add:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Add the tweet to the page
         run: python3 tools/tweets.py add "$URL" "$CATEGORY"
