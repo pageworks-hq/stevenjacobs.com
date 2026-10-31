@@ -257,8 +257,8 @@ h2 em{color:var(--accent)}
 .more-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 var(--fg);background:var(--fg);color:var(--bg)}
 /* favorite tweets: filter tabs in the panel header, our own tweet cards in columns */
 #tweets{padding:140px 0 0}
-.panel-head .tabs{margin-left:auto;display:flex;align-items:stretch;background:var(--card);border-left:1px solid var(--line)}
-.tabs button{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:none;border:0;border-left:1px solid var(--line);padding:0 14px;display:flex;align-items:center;gap:6px;transition:color .3s,background .3s}
+.panel-head .tabs{margin-left:auto;display:flex;align-items:stretch;min-width:0;overflow-x:auto;scrollbar-width:none;background:var(--card);border-left:1px solid var(--line)}
+.tabs button{flex:none;white-space:nowrap;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:none;border:0;border-left:1px solid var(--line);padding:0 14px;display:flex;align-items:center;gap:6px;transition:color .3s,background .3s}
 .tabs button:first-child{border-left:0}
 .tabs button:hover{color:var(--fg)}
 .tabs button[aria-pressed="true"]{color:#fff;background:var(--accent)}
@@ -574,8 +574,152 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
   <section id="tweets">
     <div class="wrap">
       <div class="panel reveal">
-        <div class="panel-head"><span class="no">03</span><h2>Favorite tweets</h2><div class="tabs" role="group" aria-label="Filter tweets"><button type="button" data-cat="all" aria-pressed="true">All<sup>33</sup></button><button type="button" data-cat="business" aria-pressed="false">Business<sup>8</sup></button><button type="button" data-cat="marketing" aria-pressed="false">Marketing<sup>10</sup></button><button type="button" data-cat="ai" aria-pressed="false">AI &amp; Tech<sup>8</sup></button><button type="button" data-cat="funny" aria-pressed="false">Funny<sup>4</sup></button><button type="button" data-cat="music" aria-pressed="false">Music<sup>1</sup></button><button type="button" data-cat="sports" aria-pressed="false">Sports<sup>1</sup></button><button type="button" data-cat="family" aria-pressed="false">Family<sup>1</sup></button></div></div>
+        <div class="panel-head"><span class="no">03</span><h2>Favorite tweets</h2><div class="tabs" role="group" aria-label="Filter tweets"><button type="button" data-cat="all" aria-pressed="true">All<sup>51</sup></button><button type="button" data-cat="business" aria-pressed="false">Business<sup>13</sup></button><button type="button" data-cat="marketing" aria-pressed="false">Marketing<sup>15</sup></button><button type="button" data-cat="ai" aria-pressed="false">AI &amp; Tech<sup>12</sup></button><button type="button" data-cat="funny" aria-pressed="false">Funny<sup>5</sup></button><button type="button" data-cat="music" aria-pressed="false">Music<sup>1</sup></button><button type="button" data-cat="sports" aria-pressed="false">Sports<sup>1</sup></button><button type="button" data-cat="family" aria-pressed="false">Family<sup>2</sup></button><button type="button" data-cat="watches" aria-pressed="false">Watches<sup>2</sup></button></div></div>
         <div class="tweets" id="tweetGrid">
+          <div class="tw" data-cat="marketing"><span class="cat">Marketing</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1712431730043314176/cvpXNMLd_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Chris Long<span class="tc-tick" aria-label="Verified">✓</span></b><span>@chris_nectiv</span></div><a class="tc-x" href="https://x.com/chris_nectiv/status/2107821865368502470" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Holy moly SEOs!! <br><br>Google just gave us a goldmine of data on how long it takes to crawl URLs, index content + recover from core algorithm updates:</p>
+              <div class="tc-media n1"><a href="https://x.com/chris_nectiv/status/2107821865368502470" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HUB80ElWoAAFitn.png?name=medium" alt="" loading="lazy" width="1348" height="1396"></a></div>
+              <footer><span>Oct 7, 2026</span><span>♥ 566</span><a href="https://x.com/chris_nectiv/status/2107821865368502470" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="marketing"><span class="cat">Marketing</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2086925069217841152/bbR9tdhJ_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Archive<span class="tc-tick" aria-label="Verified">✓</span></b><span>@ArchiveExplorer</span></div><a class="tc-x" href="https://x.com/ArchiveExplorer/status/2106853265694503064" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>This dinosaur doesn&#x27;t exist<br><br>35 seconds. 5 moves. 8.3M views...<br><br>Toddler cartoons like this are the quiet monster of YouTube – a breakdown of the format did 1.86M views here<br><br>Here&#x27;s exactly how this one was made:<br><br>1. The song. One prompt to Lyria 3 Pro with my own lyrics - 35 <a class="tc-more" href="https://x.com/ArchiveExplorer/status/2106853265694503064" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n2"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2106851145008250881/vid/avc1/480x852/cNPclbzi779DwZaM.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2106851145008250881/img/a1VDF37Y7ZdopMUa.jpg?name=medium" alt="" loading="lazy" width="1080" height="1920"><i></i></button><a href="https://x.com/ArchiveExplorer/status/2106853265694503064" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HT0KgzlWMAA0FkG.jpg?name=medium" alt="" loading="lazy" width="1920" height="3431"></a></div>
+              <footer><span>Oct 4, 2026</span><span>♥ 1.3K</span><a href="https://x.com/ArchiveExplorer/status/2106853265694503064" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1854668321909850112/rN99eiEX_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Jacob Rodri<span class="tc-tick" aria-label="Verified">✓</span></b><span>@jacobrodri_</span></div><a class="tc-x" href="https://x.com/jacobrodri_/status/2107495585880354974" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>&quot;You need to build apps for wealthy people&quot;<br><br>so true: $200k MRR in 15 months</p>
+              <div class="tc-media n1"><a href="https://x.com/jacobrodri_/status/2107495585880354974" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HT9UD5GbEAAOgxJ.jpg?name=medium" alt="" loading="lazy" width="1570" height="1766"></a></div>
+              <footer><span>Oct 6, 2026</span><span>♥ 156</span><a href="https://x.com/jacobrodri_/status/2107495585880354974" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="family"><span class="cat">Family</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2107612852291055616/zvpZElw5_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Robbie Hendricks<span class="tc-tick" aria-label="Verified">✓</span></b><span>@robbiehendricks</span></div><a class="tc-x" href="https://x.com/robbiehendricks/status/2106782144253112629" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>The Tin Can maybe be the best gift I’ve ever given my children.<br><br>They’re little WiFi telephones. Kids get their own phone number, but I control all access through the app.<br><br>My little boys can call me, mommy, grandparents, each other, and 911. That’s it.<br><br>(And those are the only <a class="tc-more" href="https://x.com/robbiehendricks/status/2106782144253112629" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n1"><a href="https://x.com/robbiehendricks/status/2106782144253112629" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTzLMXZXkAIdL1r.jpg?name=medium" alt="" loading="lazy" width="2014" height="2048"></a></div>
+              <footer><span>Oct 4, 2026</span><span>♥ 14.2K</span><a href="https://x.com/robbiehendricks/status/2106782144253112629" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="funny"><span class="cat">Funny</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1296121247214866432/1v-Fz73z_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Jason Oppenheim<span class="tc-tick" aria-label="Verified">✓</span></b><span>@OppenheimJason</span></div><a class="tc-x" href="https://x.com/OppenheimJason/status/2106550089271668780" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>A public service announcement.</p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2106548834684088322/vid/avc1/480x852/Y_cerZxcAq-whhsK.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2106548834684088322/img/EKqlKUMyK67Hm8Wz.jpg?name=medium" alt="" loading="lazy" width="2160" height="3840"><i></i></button></div>
+              <footer><span>Oct 4, 2026</span><span>♥ 20.7K</span><a href="https://x.com/OppenheimJason/status/2106550089271668780" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2079192339889938432/WEbyDq4I_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Suraj Sharma<span class="tc-tick" aria-label="Verified">✓</span></b><span>@suraj_sharma14</span></div><a class="tc-x" href="https://x.com/suraj_sharma14/status/2107478486227071360" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Your vibe-coded app can get sued for $100K before it makes a single sale.<br><br>6 traps hiding in most AI-built apps:<br><br>Signup never asks for age + COPPA: up to $53K per child under 13<br><br>Google Fonts loaded from Google’s servers → a Munich court made a site pay €100 to ONE visitor for <a class="tc-more" href="https://x.com/suraj_sharma14/status/2107478486227071360" target="_blank" rel="noopener">Show more</a></p>
+              
+              <footer><span>Oct 6, 2026</span><span>♥ 4.6K</span><a href="https://x.com/suraj_sharma14/status/2107478486227071360" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="marketing"><span class="cat">Marketing</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1946047588802699264/7A2a_G-x_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>YouTube Automation</b><span>@Ytautomation6</span></div><a class="tc-x" href="https://x.com/Ytautomation6/status/2105641648956875244" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>This format is cooking everywhere 🔥<br><br>It could be one of the next big faceless YouTube formats.<br><br>I’ve monetized one channel with it, and a second is close to monetization.<br><br>It can work across history, geography &amp; other 2D niches.<br><br>Want to get started? Comment “START” 👇 h <a class="tc-more" href="https://x.com/Ytautomation6/status/2105641648956875244" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n1"><a href="https://x.com/Ytautomation6/status/2105641648956875244" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTi950vWcAAPdVx.jpg?name=medium" alt="" loading="lazy" width="1990" height="1320"></a></div>
+              <footer><span>Oct 1, 2026</span><span>♥ 305</span><a href="https://x.com/Ytautomation6/status/2105641648956875244" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2080000242603421696/qd0JiPub_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>⭕️ CyberMike ⭕️<span class="tc-tick" aria-label="Verified">✓</span></b><span>@CyberMikeOG</span></div><a class="tc-x" href="https://x.com/CyberMikeOG/status/2105326745507483955" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>How do you Starlink?<br>Here is a simple mount that is nearly hidden. <br>Links below for hardware.</p>
+              <div class="tc-media n2"><a href="https://x.com/CyberMikeOG/status/2105326745507483955" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTefhJpaUAAqOWr.jpg?name=medium" alt="" loading="lazy" width="1194" height="1580"></a><a href="https://x.com/CyberMikeOG/status/2105326745507483955" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTefhJoaEAAQGs2.jpg?name=medium" alt="" loading="lazy" width="1320" height="1707"></a></div>
+              <footer><span>Sep 30, 2026</span><span>♥ 2.8K</span><a href="https://x.com/CyberMikeOG/status/2105326745507483955" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2032871571161853952/55jBUS9r_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>kocer<span class="tc-tick" aria-label="Verified">✓</span></b><span>@kocer_eth</span></div><a class="tc-x" href="https://x.com/kocer_eth/status/2104931261441581406" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>holy sh*t, someone mapped 2,596 live Grok Bot templates into one searchable repo<br><br>every Grok Bot user can steal the setup<br><br>this repo covers 8 categories across coding, inbox, research, sales, finance, content, personal admin and multi-Bot teams<br><br>the workflow:<br><br>› search for the <a class="tc-more" href="https://x.com/kocer_eth/status/2104931261441581406" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2104930624591052800/vid/avc1/480x600/XgWej7QMUTIaJtXe.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2104930624591052800/img/ATaQfZt9TrPTd0e4.jpg?name=medium" alt="" loading="lazy" width="1800" height="2250"><i></i></button></div>
+              <footer><span>Sep 29, 2026</span><span>♥ 208</span><a href="https://x.com/kocer_eth/status/2104931261441581406" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1877805472662896640/An9VRYdu_normal.png" alt="" width="40" height="40" loading="lazy"><div><b>AI, Ads &amp; Apps <span class="tc-tick" aria-label="Verified">✓</span></b><span>@AIAdsApps</span></div><a class="tc-x" href="https://x.com/AIAdsApps/status/2104647866912292938" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Here are a few High Revenue Low Download apps<br><br>1. RealCall</p>
+              <div class="tc-media n1"><a href="https://x.com/AIAdsApps/status/2104647866912292938" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTU2FO2WoAIZhmy.jpg?name=medium" alt="" loading="lazy" width="1876" height="1400"></a></div>
+              <footer><span>Sep 28, 2026</span><span>♥ 22</span><a href="https://x.com/AIAdsApps/status/2104647866912292938" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="watches"><span class="cat">Watches</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1827726586017161217/tdbj-Kdl_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Tempus<span class="tc-tick" aria-label="Verified">✓</span></b><span>@MrTempus_</span></div><a class="tc-x" href="https://x.com/MrTempus_/status/2104561495334084931" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Certaines Rolex faut juste s&#x27;asseoir et admirer.</p>
+              <div class="tc-media n3"><a href="https://x.com/MrTempus_/status/2104561495334084931" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTTnaJZXwAA1qYx.jpg?name=medium" alt="" loading="lazy" width="1638" height="2048"></a><a href="https://x.com/MrTempus_/status/2104561495334084931" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTTncEHW8AAcaps.jpg?name=medium" alt="" loading="lazy" width="1639" height="2048"></a><a href="https://x.com/MrTempus_/status/2104561495334084931" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTTndQsW8AAZ3tJ.jpg?name=medium" alt="" loading="lazy" width="1638" height="2048"></a></div>
+              <footer><span>Sep 28, 2026</span><span>♥ 2.5K</span><a href="https://x.com/MrTempus_/status/2104561495334084931" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="watches"><span class="cat">Watches</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2022450715306921984/BWs7Z6b9_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Rolex Club<span class="tc-tick" aria-label="Verified">✓</span></b><span>@Rolexclocks</span></div><a class="tc-x" href="https://x.com/Rolexclocks/status/2103271319777554929" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Rolex GMT Master 2 “Tiger Iron” dial</p>
+              <div class="tc-media n2"><a href="https://x.com/Rolexclocks/status/2103271319777554929" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTBSHmJboAA5a79.jpg?name=medium" alt="" loading="lazy" width="1411" height="1984"></a><a href="https://x.com/Rolexclocks/status/2103271319777554929" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTBSHmBbkAAMf51.jpg?name=medium" alt="" loading="lazy" width="1323" height="2048"></a></div>
+              <footer><span>Sep 24, 2026</span><span>♥ 1.7K</span><a href="https://x.com/Rolexclocks/status/2103271319777554929" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="ai"><span class="cat">AI &amp; Tech</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2021923000195448832/cY3O6efb_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Paulo<span class="tc-tick" aria-label="Verified">✓</span></b><span>@paulo_kombucha</span></div><a class="tc-x" href="https://x.com/paulo_kombucha/status/2103073588391616658" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>It has never been easier to put a mascot in an app</p>
+              <div class="tc-media n1"><button type="button" class="tc-vid" data-src="https://video.twimg.com/amplify_video/2103073314218311681/vid/avc1/638x360/xEABraLBvAgyQWLC.mp4" aria-label="Play video"><img src="https://pbs.twimg.com/amplify_video_thumb/2103073314218311681/img/3Gq8efRFxP0tg71N.jpg?name=medium" alt="" loading="lazy" width="3836" height="2160"><i></i></button></div>
+              <footer><span>Sep 24, 2026</span><span>♥ 400</span><a href="https://x.com/paulo_kombucha/status/2103073588391616658" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="marketing"><span class="cat">Marketing</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1617519932069085184/D2MZ3AcW_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Alex Fedotoff<span class="tc-tick" aria-label="Verified">✓</span></b><span>@FedotOff90</span></div><a class="tc-x" href="https://x.com/FedotOff90/status/2102780304679370839" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Ad accounts do not get banned for one bad ad. They get banned for a pattern the reviewer can see and you cannot.<br><br>Three guides, in the order you need them:<br><br>1. Prevent it. Ad Account Health. The daily habits that keep an account clean, plus the Banned Words swap lists by niche, <a class="tc-more" href="https://x.com/FedotOff90/status/2102780304679370839" target="_blank" rel="noopener">Show more</a></p>
+              <div class="tc-media n1"><a href="https://x.com/FedotOff90/status/2102780304679370839" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HS6Tg3vb0AA-oXT.png?name=medium" alt="" loading="lazy" width="1920" height="920"></a></div>
+              <footer><span>Sep 23, 2026</span><span>♥ 49</span><a href="https://x.com/FedotOff90/status/2102780304679370839" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2101009488203427840/OInjiSSR_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Jah Mills<span class="tc-tick" aria-label="Verified">✓</span></b><span>@itsjahmills</span></div><a class="tc-x" href="https://x.com/itsjahmills/status/2102125395860451591" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>$1M/mo as a solo founder<br>in under a year is actually insane<br><br>that&#x27;s what the guy behind<br>Scroll the Bible pulled off<br><br>that guy is locked in</p>
+              <div class="tc-media n1"><a href="https://x.com/itsjahmills/status/2102125395860451591" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HSw_6F5WkAEo9KY.jpg?name=medium" alt="" loading="lazy" width="974" height="1050"></a></div>
+              <footer><span>Sep 21, 2026</span><span>♥ 306</span><a href="https://x.com/itsjahmills/status/2102125395860451591" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="marketing"><span class="cat">Marketing</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2024970158846902272/HD9n7r9K_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>jaffa<span class="tc-tick" aria-label="Verified">✓</span></b><span>@dsqjaffa</span></div><a class="tc-x" href="https://x.com/dsqjaffa/status/2102054148925526206" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>Jev is INSANE for Marketing<br><br>You can&#x27;t escape it. Literally EVERYWHERE you look on your feed is filled with something about &quot;jEv is iNsAnE&quot;... and it&#x27;s generated tens of millions of views on X in less than a week.</p>
+              <div class="tc-media n1"><a href="https://x.com/dsqjaffa/status/2102054148925526206" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HSv-7DAWAAAuyIg.jpg?name=medium" alt="" loading="lazy" width="3072" height="1229"></a></div>
+              <footer><span>Sep 21, 2026</span><span>♥ 766</span><a href="https://x.com/dsqjaffa/status/2102054148925526206" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/2089559241770086400/U8pC2uhy_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Dylan<span class="tc-tick" aria-label="Verified">✓</span></b><span>@dsullyyy</span></div><a class="tc-x" href="https://x.com/dsullyyy/status/2104710998318022880" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>GO TO WHOP.COM AND JOIN THE PARTNER PROGRAM...<br><br>EVERY BUSINESS YOU BRING TO WHOP PAYS YOU 30% OF WHOP&#x27;S FEE ON EVERY PAYMENT IT TAKES.<br><br>NOW FIND A PAID DISCORD IN ANY NICHE AND CLICK THEIR BUY BUTTON.<br><br>THIS SHOWS YOU THEIR CHECKOUT. <br><br>PAYPAL OR A PAYMENT LINK MEANS <a class="tc-more" href="https://x.com/dsullyyy/status/2104710998318022880" target="_blank" rel="noopener">Show more</a></p>
+              
+              <footer><span>Sep 28, 2026</span><span>♥ 81</span><a href="https://x.com/dsullyyy/status/2104710998318022880" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
+          <div class="tw" data-cat="business"><span class="cat">Business</span>
+            <article class="tc">
+              <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1896353952645419008/oxbjeK8s_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Ryan Clogg<span class="tc-tick" aria-label="Verified">✓</span></b><span>@RyanClogg</span></div><a class="tc-x" href="https://x.com/RyanClogg/status/2104694400014332315" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
+              <p>This is insane.<br><br>People are making $1M+ a year.<br><br>I want to take this seriously.<br><br>Who wants to be one of my partners?<br><br>We can get rich together.</p>
+              <div class="tc-media n1"><a href="https://x.com/RyanClogg/status/2104694400014332315" target="_blank" rel="noopener"><img src="https://pbs.twimg.com/media/HTVgRVDWQAAgdCR.jpg?name=medium" alt="" loading="lazy" width="810" height="982"></a></div>
+              <footer><span>Sep 28, 2026</span><span>♥ 123</span><a href="https://x.com/RyanClogg/status/2104694400014332315" target="_blank" rel="noopener">View on X →</a></footer>
+            </article>
+          </div>
           <div class="tw" data-cat="funny"><span class="cat">Funny</span>
             <article class="tc">
               <header><img class="tc-av" src="https://pbs.twimg.com/profile_images/1207636309508014081/hfA24vWM_normal.jpg" alt="" width="40" height="40" loading="lazy"><div><b>Out of Context Human Race<span class="tc-tick" aria-label="Verified">✓</span></b><span>@NoContextHumans</span></div><a class="tc-x" href="https://x.com/NoContextHumans/status/2114069414878367880" target="_blank" rel="noopener" aria-label="View on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></a></header>
@@ -841,7 +985,7 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
             </article>
           </div>
         </div>
-        <div class="tw-more" id="tweetMore"><button type="button" class="all-btn">Show all <span>33</span> tweets <span aria-hidden="true">↓</span></button></div>
+        <div class="tw-more" id="tweetMore"><button type="button" class="all-btn">Show all <span>51</span> tweets <span aria-hidden="true">↓</span></button></div>
       </div>
     </div>
   </section>
