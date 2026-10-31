@@ -1,0 +1,50 @@
+name: Add favorite tweet
+
+# Run from the Actions tab ("Run workflow") or from the iPhone share-sheet shortcut via the API.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Tweet link (x.com/…/status/…)
+        required: true
+        type: string
+      category:
+        description: Category
+        required: true
+        default: auto
+        type: choice
+        options: [auto, business, marketing, ai, funny, music, sports, family, watches]
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: add-tweet
+  cancel-in-progress: false
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add the tweet to the page
+        run: python3 tools/tweets.py add "$URL" "$CATEGORY"
+        env:
+          URL: ${{ inputs.url }}
+          CATEGORY: ${{ inputs.category }}
+          PYTHONIOENCODING: utf-8
+
+      - name: Commit and publish
+        run: |
+          git config user.name "stevenjacobs.com bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/tweets.json index.html
+          git diff --cached --quiet && { echo "Nothing changed"; exit 0; }
+          git commit -m "Favorite tweet: $URL"
+          git push
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null || true
+        env:
+          URL: ${{ inputs.url }}
+          GH_TOKEN: ${{ github.token }}
