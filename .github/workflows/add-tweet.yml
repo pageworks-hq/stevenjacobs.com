@@ -13,7 +13,8 @@ on:
         required: true
         default: auto
         type: choice
-        options: [auto, business, marketing, ai, funny, music, sports, family, watches]
+        # "business" is the old name for entrepreneurship, kept so existing shortcuts still work
+        options: [auto, entrepreneurship, marketing, ai, funny, music, sports, family, watches, business]
 
 permissions:
   contents: write
@@ -35,6 +36,8 @@ jobs:
           URL: ${{ inputs.url }}
           CATEGORY: ${{ inputs.category }}
           PYTHONIOENCODING: utf-8
+          # optional: lets "auto" ask Claude instead of matching keywords
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
       - name: Commit and publish
         run: |

@@ -12,19 +12,27 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'tweets.json')
 PAGE = os.path.join(ROOT, 'index.html')
 
-CATS = [('all', 'All'), ('business', 'Business'), ('marketing', 'Marketing'), ('ai', 'AI &amp; Tech'), ('funny', 'Funny'),
+CATS = [('all', 'All'), ('business', 'Entrepreneurship'), ('marketing', 'Marketing / SEO'), ('ai', 'AI &amp; Tech'), ('funny', 'Funny'),
         ('music', 'Music'), ('sports', 'Sports'), ('family', 'Family'), ('watches', 'Watches')]
-# rough guesses for "auto"; the first category with a hit wins
-KEYWORDS = [
-    ('watches', r'\b(rolex|watch|patek|omega|audemars|ap royal|gmt|daytona|submariner)\b'),
-    ('music', r'\b(dj|song|album|rapper|concert|festival|beat|spotify|music|producer|edm|rave)\b'),
-    ('sports', r'\b(nfl|nba|mlb|football|basketball|baseball|soccer|golf|ufc|touchdown|longhorns|qb|quarterback)\b'),
-    ('family', r'\b(kids?|son|daughter|baby|toddler|wife|husband|dad|mom|parent|family|children)\b'),
-    ('marketing', r'\b(seo|ads?|meta ads|google ads|tiktok|viral|views|youtube|faceless|ugc|creative|funnel|backlinks?|indexed|organic|cpm|cpc|newsletter)\b'),
-    ('ai', r'\b(ai|claude|gpt|chatgpt|grok|gemini|llm|openai|anthropic|cursor|replit|vibe.?cod|prompt|agent|model)\b'),
-    ('business', r'(\$|\bmrr\b|\barr\b|revenue|profit|startup|founder|business|app store|saas|\bmo\b|/month|million)'),
-    ('funny', r'(😂|🤣|😭|lmao|lol|hilarious|funny|meme)'),
-]
+# other names people may type or pick in the shortcut
+ALIASES = {'entrepreneurship': 'business', 'startups': 'business', 'money': 'business', 'seo': 'marketing',
+           'marketing/seo': 'marketing', 'growth': 'marketing', 'tech': 'ai', 'humor': 'funny'}
+# "auto": every keyword hit scores for its category (weight in front), the highest total wins
+KEYWORDS = {
+    'watches': (3, r'\b(rolex|patek|omega|audemars|richard mille|gmt|daytona|submariner|horolog\w*|wristwatch|timepiece|cartier)\b'),
+    'music': (3, r'\b(dj|song|songs|album|rapper|concert|festival|spotify|music|producer|edm|rave|playlist|beat drop|lyrics)\b'),
+    'sports': (3, r'\b(nfl|nba|mlb|nhl|football|basketball|baseball|soccer|ufc|touchdown|longhorns|qb|quarterback|playoffs|super bowl|athlete)\b'),
+    'family': (2, r'\b(kids?|my son|my daughter|baby|toddler|wife|husband|dad|mom|parents?|parenting|family|children|grandparents?)\b'),
+    'marketing': (2, r'\b(seo|serp|backlinks?|index(ed|ing)?|crawl\w*|google search|gsc|search console|keywords?|rank(ing|s)?|organic|traffic|'
+                     r'ads?|meta ads|google ads|apple ads|search ads|cpm|cpc|ctr|roas|creatives?|ugc|hooks?|funnel|landing page|'
+                     r'viral|views|followers|audience|tiktok|reels|shorts|youtube|faceless|niches?|content|carousels?|newsletter|'
+                     r'personal brand|brand|marketing|growth|distribution|acquisition|onboarding|conversion|copywriting)\b'),
+    'ai': (2, r'\b(ai|claude|opus|sonnet|gpt|chatgpt|grok|gemini|llm|openai|anthropic|cursor|replit|vibe.?cod\w*|prompts?|agents?|'
+              r'models?|automation|automate\w*|bots?|github|repo|api|code|coding|developer|open.?source|starlink|software)\b'),
+    'business': (2, r'(\$\d|\bmrr\b|\barr\b|revenue|profit|startup|founder|entrepreneur\w*|business|app store|saas|/mo\b|/month|'
+                    r'per month|million|\$1m|solo|side hustle|make money|making money|income|apps? making|bootstrap\w*|exit|acquired)'),
+    'funny': (3, r'(😂|🤣|lmao|\blol\b|hilarious|funny|meme|no context|snl)'),
+}
 MON = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split()
 XSVG = ('<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 '
         '3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg>')
@@ -70,12 +78,33 @@ def fetch(tweet_id):
             'text': html.unescape(text.strip()), 'date': d['created_at'][:10], 'likes': d.get('favorite_count', 0), 'media': media}
 
 
+def ask_claude(t):
+    """With ANTHROPIC_API_KEY set (a repo secret), let Claude read the tweet and pick; None if unavailable."""
+    key = os.environ.get('ANTHROPIC_API_KEY')
+    if not key:
+        return None
+    names = ', '.join(f'{c} ({html.unescape(n)})' for c, n in CATS[1:])
+    prompt = (f'Sort this tweet into exactly one category for a personal website. Categories: {names}.\n'
+              f'Tweet by @{t["handle"]} ({len(t["media"])} photos/videos):\n"""{t["text"]}"""\n'
+              'Reply with only the category id, nothing else.')
+    req = urllib.request.Request('https://api.anthropic.com/v1/messages', method='POST',
+                                 data=json.dumps({'model': 'claude-haiku-5-5', 'max_tokens': 10,
+                                                  'messages': [{'role': 'user', 'content': prompt}]}).encode(),
+                                 headers={'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json'})
+    try:
+        out = json.load(urllib.request.urlopen(req, timeout=30))['content'][0]['text'].strip().lower()
+    except Exception as e:
+        print(f'Claude unavailable ({e}); using keywords')
+        return None
+    out = re.sub(r'[^a-z]', '', out)
+    return out if out in dict(CATS) and out != 'all' else None
+
+
 def guess(text):
     t = text.lower()
-    for cat, pat in KEYWORDS:
-        if re.search(pat, t):
-            return cat
-    return 'business'
+    scores = {cat: w * len(re.findall(pat, t)) for cat, (w, pat) in KEYWORDS.items()}
+    best = max(scores, key=scores.get)
+    return best if scores[best] else 'business'
 
 
 def fmt(n):
@@ -153,9 +182,10 @@ def main(argv):
         if not m:
             raise SystemExit(f'Not a tweet link: {argv[1]}')
         cat = (argv[2] if len(argv) > 2 else 'auto').strip().lower()
+        cat = ALIASES.get(cat.replace(' ', ''), cat)
         tweets = [t for t in load() if t['id'] != m.group(1)]
         t = fetch(m.group(1))
-        t['cat'] = guess(t['text']) if cat in ('', 'auto') else cat
+        t['cat'] = (ask_claude(t) or guess(t['text'])) if cat in ('', 'auto') else cat
         if t['cat'] not in dict(CATS):
             raise SystemExit(f'Unknown category "{cat}". Use one of: {", ".join(c for c, _ in CATS[1:])} or auto')
         tweets.insert(0, t)
