@@ -264,17 +264,28 @@ h2 em{color:var(--accent)}
 .ball{transition:transform .3s}
 
 /* writing */
-.posts{border-top:1px solid var(--line)}
-.post{display:grid;grid-template-columns:80px 160px 1fr 60px;gap:24px;align-items:center;padding:38px 0;border-bottom:1px solid var(--line);position:relative;transition:padding .4s}
-.post::before{content:"";position:absolute;inset:0;background:var(--fg);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.2,.8,.2,1);z-index:-1}
-.post:hover{color:var(--bg);padding-left:24px;padding-right:24px}
-.post:hover::before{transform:scaleY(1)}
-.post:hover .meta,.post:hover .ex{color:color-mix(in srgb,var(--bg) 65%,var(--fg))}
-.post .meta{font:500 12px var(--mono);letter-spacing:.1em;color:var(--muted);transition:color .4s}
-.post h4{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3vw,38px);line-height:1.1}
-.post .ex{color:var(--muted);margin-top:10px;font-size:15px;line-height:1.55;max-width:640px;transition:color .4s}
-.post .go{font-size:26px;justify-self:end;transition:transform .4s}
-.post:hover .go{transform:translateX(-6px) rotate(-45deg)}
+.post{display:grid;grid-template-columns:150px minmax(0,1fr) 32px;gap:32px;align-items:center;padding:22px 58px 22px 60px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;transition:background .3s}
+.panel>.post:last-child{border-bottom:0}
+.post:hover{background:color-mix(in srgb,var(--bg) 55%,var(--card))}
+.post .when{display:flex;flex-direction:column}
+.post .yr{font:800 38px/1 var(--wide);font-stretch:125%;letter-spacing:-.02em}
+.post .mo{margin-top:4px;font:500 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.post h4{font:800 18px/1.25 var(--wide);font-stretch:125%;letter-spacing:-.01em;transition:color .3s}
+.post:hover h4{color:var(--accent)}
+.post .ex{margin-top:6px;font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.post .go{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:14px;transition:background .3s,color .3s,border-color .3s,transform .3s}
+.post:hover .go{background:var(--fg);color:var(--bg);border-color:var(--fg);transform:rotate(-45deg)}
+.panel-foot{display:flex;justify-content:flex-end;padding:14px 58px 14px 30px}
+.all-btn{display:inline-flex;align-items:center;gap:10px;font:800 11px var(--wide);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:14px 18px;border-radius:6px;background:var(--fg);color:var(--bg);box-shadow:0 3px 0 color-mix(in srgb,var(--fg) 55%,#000);transition:transform .2s,box-shadow .2s,background .3s}
+.all-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 color-mix(in srgb,var(--fg) 55%,#000);background:var(--accent);color:#fff}
+@media (max-width:700px){
+  .post{grid-template-columns:1fr 32px;gap:10px 16px;padding:20px}
+  .post .when{grid-column:1/-1;flex-direction:row;align-items:baseline;gap:8px}
+  .post .yr{font-size:26px}
+  .post .ex{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .panel-foot{padding:14px 20px}
+  .all-btn{width:100%;justify-content:center}
+}
 .posts-wrap{position:relative;z-index:0}
 .preview{position:fixed;top:0;left:0;width:300px;height:200px;border-radius:16px;pointer-events:none;z-index:40;overflow:hidden;opacity:0;transform:translate(-50%,-50%) scale(.6) rotate(-4deg);transition:opacity .3s,transform .4s cubic-bezier(.2,.8,.2,1);display:grid;place-items:center;font-family:var(--serif);font-size:44px;font-style:italic;color:#fff;text-align:center;padding:20px;line-height:1}
 .preview.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-4deg)}
@@ -307,9 +318,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .panel-head .count span{display:none}
   .more{flex-direction:column;align-items:stretch;padding:16px 20px}
   .more-btn{text-align:center}
-  .post{grid-template-columns:1fr;gap:10px}
-  .post .go{display:none}
-  .post .idx{display:none}
   section{padding:100px 0}
 }
 @media (max-width:600px){
@@ -444,27 +452,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   <section id="writing">
     <div class="wrap">
-      <div class="eyebrow reveal">02 · Writing</div>
-      <h2 class="reveal">Occasional <em>notes.</em></h2>
-      <div class="posts posts-wrap reveal">
-        <a class="post" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/" data-cursor="READ" data-preview="Semi-active income." data-color="#ff5a1f">
-          <span class="meta idx">01</span>
-          <span class="meta">AUG 23, 2026</span>
-          <div>
-            <h4>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h4>
-            <p class="ex">Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: low startup costs, recurring revenue, and margins that make your hours worth $100–$500 each.</p>
-          </div>
-          <span class="go">→</span>
-        </a>
-        <a class="post" href="/favorite-products-for-kids/" data-cursor="READ" data-preview="Saved our sanity." data-color="#2bb3ff">
-          <span class="meta idx">02</span>
-          <span class="meta">JAN 19, 2024</span>
-          <div>
-            <h4>Favorite Products for Kids</h4>
-            <p class="ex">The baby products and baby tech that actually worked for us. Not only did it save us time — it saved us our sanity.</p>
-          </div>
-          <span class="go">→</span>
-        </a>
+      <div class="panel posts-wrap reveal">
+        <div class="panel-head"><span class="no">02</span><h2>Blog</h2></div>
+          <a class="post" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/" data-cursor="READ" data-preview="Semi-active income." data-color="#ff5a1f">
+            <span class="when"><span class="yr">2026</span><span class="mo">Aug</span></span>
+            <div><h4>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h4><p class="ex">Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: low startup costs, recurring revenue, and margins that make your hours worth $100–$500 each.</p></div>
+            <span class="go">→</span>
+          </a>
+          <a class="post" href="/favorite-products-for-kids/" data-cursor="READ" data-preview="Saved our sanity." data-color="#2bb3ff">
+            <span class="when"><span class="yr">2024</span><span class="mo">Jan</span></span>
+            <div><h4>Favorite Products for Kids</h4><p class="ex">The baby products and baby tech that actually worked for us. Not only did it save us time — it saved us our sanity.</p></div>
+            <span class="go">→</span>
+          </a>
+        <div class="panel-foot"><a class="all-btn" href="/blog/">See all my posts <span>→</span></a></div>
       </div>
 
       <div class="quotes">

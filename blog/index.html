@@ -22,11 +22,11 @@
 <meta name="twitter:image" content="https://stevenjacobs.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wdth,wght@125,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Blog", "name": "Steven Jacobs — Writing", "url": "https://stevenjacobs.com/blog/", "author": {"@type": "Person", "@id": "https://stevenjacobs.com/#person", "name": "Steven Jacobs"}, "blogPost": [{"@type": "BlogPosting", "headline": "20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down", "url": "https://stevenjacobs.com/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/"}, {"@type": "BlogPosting", "headline": "Favorite Products for Kids", "url": "https://stevenjacobs.com/favorite-products-for-kids/"}]}</script>
 <style>
 :root{--bg:#f4f1ea;--fg:#141413;--muted:#6f6c66;--line:#dcd7cc;--accent:#e5470f;--card:#ebe7dd;
---serif:"Instrument Serif",Georgia,serif;--sans:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+--serif:"Instrument Serif",Georgia,serif;--sans:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--wide:"Archivo","Inter",system-ui,sans-serif}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0b0c;--fg:#f2efe9;--muted:#8a877f;--line:#232325;--accent:#ff5a1f;--card:#121214}}
 :root[data-theme="dark"]{--bg:#0b0b0c;--fg:#f2efe9;--muted:#8a877f;--line:#232325;--accent:#ff5a1f;--card:#121214}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -57,21 +57,52 @@ h1.title{font-family:var(--serif);font-weight:400;font-size:clamp(40px,6.5vw,72p
 .back:hover{background:var(--fg);color:var(--bg)}
 footer{border-top:1px solid var(--line);padding:28px 0;font:500 11px var(--mono);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.list a.item{display:block;padding:32px 0;border-bottom:1px solid var(--line);text-decoration:none}
-.list a.item:hover h2{color:var(--accent)}
-.list .meta{font:500 12px var(--mono);letter-spacing:.1em;color:var(--muted)}
-.list h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,36px);line-height:1.1;margin:8px 0 10px;transition:color .3s}
-.list p{color:var(--muted);line-height:1.6}
+.panel{border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.03),0 18px 40px -24px rgba(0,0,0,.25)}
+.panel-head{display:flex;align-items:stretch;border-bottom:1px solid var(--line);height:44px;background-image:radial-gradient(color-mix(in srgb,var(--fg) 7%,transparent) 1px,transparent 1.2px);background-size:7px 7px}
+.panel-head .no{display:grid;place-items:center;width:44px;background:var(--accent);color:#fff;font:500 11px var(--mono)}
+.panel-head h2{display:flex;align-items:center;padding:0 16px;margin:0;font:800 12px/1 var(--wide);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;background:var(--card)}
+.post{display:grid;grid-template-columns:150px minmax(0,1fr) 32px;gap:32px;align-items:center;padding:22px 58px 22px 60px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;transition:background .3s}
+.panel>.post:last-child{border-bottom:0}
+.post:hover{background:color-mix(in srgb,var(--bg) 55%,var(--card))}
+.post .when{display:flex;flex-direction:column}
+.post .yr{font:800 38px/1 var(--wide);font-stretch:125%;letter-spacing:-.02em}
+.post .mo{margin-top:4px;font:500 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.post h4{font:800 18px/1.25 var(--wide);font-stretch:125%;letter-spacing:-.01em;transition:color .3s}
+.post:hover h4{color:var(--accent)}
+.post .ex{margin-top:6px;font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.post .go{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:14px;transition:background .3s,color .3s,border-color .3s,transform .3s}
+.post:hover .go{background:var(--fg);color:var(--bg);border-color:var(--fg);transform:rotate(-45deg)}
+.panel-foot{display:flex;justify-content:flex-end;padding:14px 58px 14px 30px}
+.all-btn{display:inline-flex;align-items:center;gap:10px;font:800 11px var(--wide);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:14px 18px;border-radius:6px;background:var(--fg);color:var(--bg);box-shadow:0 3px 0 color-mix(in srgb,var(--fg) 55%,#000);transition:transform .2s,box-shadow .2s,background .3s}
+.all-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 color-mix(in srgb,var(--fg) 55%,#000);background:var(--accent);color:#fff}
+@media (max-width:700px){
+  .post{grid-template-columns:1fr 32px;gap:10px 16px;padding:20px}
+  .post .when{grid-column:1/-1;flex-direction:row;align-items:baseline;gap:8px}
+  .post .yr{font-size:26px}
+  .post .ex{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .panel-foot{padding:14px 20px}
+  .all-btn{width:100%;justify-content:center}
+}
+.wrap.wide{max-width:1100px}
 </style>
 </head>
 <body>
 <nav><a href="/">← Steven Jacobs</a><div class="links"><a href="/#work">Work</a><a href="/blog/">Writing</a></div></nav>
-<main class="wrap">
+<main class="wrap wide">
 <header class="post-head"><div class="eyebrow">Writing</div><h1 class="title">Occasional notes.</h1></header>
-<div class="list">
-<a class="item" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/"><div class="meta">AUG 23, 2026</div><h2>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h2><p>Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: businesses with low startup costs, recurring revenue,…</p></a>
-<a class="item" href="/favorite-products-for-kids/"><div class="meta">JAN 19, 2024</div><h2>Favorite Products for Kids</h2><p>While it may be a little weird for me talking about the best baby products &amp; baby tech, these are the products that worked for us. Not only did it save us…</p></a>
-</div>
+        <div class="panel">
+        <div class="panel-head"><span class="no">02</span><h2>All posts</h2></div>
+          <a class="post" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/">
+            <span class="when"><span class="yr">2026</span><span class="mo">Aug</span></span>
+            <div><h4>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h4><p class="ex">Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: low startup costs, recurring revenue, and margins that make your hours worth $100–$500 each.</p></div>
+            <span class="go">→</span>
+          </a>
+          <a class="post" href="/favorite-products-for-kids/">
+            <span class="when"><span class="yr">2024</span><span class="mo">Jan</span></span>
+            <div><h4>Favorite Products for Kids</h4><p class="ex">The baby products and baby tech that actually worked for us. Not only did it save us time — it saved us our sanity.</p></div>
+            <span class="go">→</span>
+          </a>
+        </div>
 <p style="height:80px"></p>
 </main>
 <footer><div class="wrap"><span>© 2026 Steven Jacobs</span><span>Austin, TX</span></div></footer>
