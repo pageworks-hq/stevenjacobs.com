@@ -798,10 +798,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     gl.attachShader(prog,sh(gl.VERTEX_SHADER,'attribute vec2 p;attribute vec2 uv;uniform vec2 res;varying vec2 v;void main(){v=uv;vec2 c=p/res*2.-1.;gl_Position=vec4(c.x,-c.y,0.,1.);}'));
     // dizzy: twist the picture around each of your own eyes into a spiral (eye centres in image pixels)
     gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,
-      'precision mediump float;uniform sampler2D t,t2;uniform float mx,sw,tm;varying vec2 v;'+
+      'precision mediump float;uniform sampler2D t;uniform float sw,tm;varying vec2 v;'+
       'vec2 tw(vec2 p,vec2 c,float dir){vec2 d=p-c;float f=1.-smoothstep(0.,17.,length(d));float a=dir*sw*f*f*(6.+5.*tm);float s=sin(a),k=cos(a);return c+vec2(k*d.x-s*d.y,s*d.x+k*d.y);}'+
       'void main(){vec2 p=v*vec2(323.,384.);p=tw(p,vec2(138.,103.),1.);p=tw(p,vec2(191.,102.),-1.);vec2 u=p/vec2(323.,384.);'+
-      'gl_FragColor=mix(texture2D(t,u),texture2D(t2,u),mx);}'));
+      'gl_FragColor=texture2D(t,u);}'));
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog,gl.LINK_STATUS)) return;
     gl.useProgram(prog);
@@ -823,16 +823,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     const pb=gl.createBuffer(), pL=gl.getAttribLocation(prog,'p'); gl.enableVertexAttribArray(pL);
     const resL=gl.getUniformLocation(prog,'res');
     gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,true);
-    // texture 0 is the normal smile, texture 1 the "ow!" face shown while pulled hard
-    [person,ouch].forEach((im,n)=>{
-      gl.activeTexture(gl.TEXTURE0+n); gl.bindTexture(gl.TEXTURE_2D,gl.createTexture());
-      gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,im);
-      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
-    });
-    gl.uniform1i(gl.getUniformLocation(prog,'t'),0); gl.uniform1i(gl.getUniformLocation(prog,'t2'),1);
-    const mxL=gl.getUniformLocation(prog,'mx'); let mx=0, wow=0, ouchT=0;
-    const swL=gl.getUniformLocation(prog,'sw'), tmL=gl.getUniformLocation(prog,'tm'); let sw=0, ouchOn=0, dzT=0, dz0=0;
+    gl.bindTexture(gl.TEXTURE_2D,gl.createTexture());
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,person);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    const swL=gl.getUniformLocation(prog,'sw'), tmL=gl.getUniformLocation(prog,'tm'); let sw=0, wow=0, dzT=0, dz0=0;
     gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
     // alpha lookup so only you are grabbable, not the blue circle or the corners
     const ac=document.createElement('canvas'); ac.width=person.naturalWidth; ac.height=person.naturalHeight;
@@ -898,19 +893,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         // widen the falloff with the pull so the skin stretches instead of folding over itself
         const sig=Math.max(iw*.16, Math.hypot(dx,dy)*.62); s2=sig*sig*2;
       }
-      // reactions: a little pull raises the brows and drops the jaw, a big one makes you yell
+      // reactions: a little pull raises the brows and drops the jaw, a big one sends your eyes spinning,
+      // and they keep spinning for a couple of seconds after you let go
       const L=Math.hypot(dx,dy)/iw, now=performance.now();
-      if (L>.2) ouchT=now+350;
-      const ow=now<ouchT?1:0;
-      mx+=(ow-mx)*(ow?.35:.15);
-      // once the yelling stops you're left dizzy for a bit, eyes spinning
-      if (ow){ ouchOn=ouchOn||now; dzT=0; }
-      else if (ouchOn){ if (now-ouchOn>250){ dzT=now+1900; dz0=now; } ouchOn=0; }
+      if (L>.2){ if (now>=dzT) dz0=now; dzT=now+1900; }
       const dz=now<dzT?1:0;
       sw+=(dz-sw)*(dz?.12:.05);
-      wow+=(Math.min(1,L/.12)*(1-mx)*(1-sw)-wow)*.2;
+      wow+=(Math.min(1,L/.12)*(1-sw)-wow)*.2;
       const bu=wow*iw*.03, jd=wow*iw*.025;
-      let moving=Math.abs(ow-mx)+wow+sw+dz;
+      let moving=wow+sw+dz;
       const stiff=grab?.3:hov?.2:.1, damp=grab?.5:hov?.62:.84;
       for (let k=0;k<cnt*2;k+=2){
         let tx=rest[k], ty=rest[k+1]-brow[k>>1]*bu+jaw[k>>1]*jd;
@@ -922,7 +913,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       if (!pull && moving<.05){ pos.set(rest); vel.fill(0); dirty=false; }
       gl.viewport(0,0,faceCv.width,faceCv.height);
       gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform2f(resL,faceCv.width,faceCv.height); gl.uniform1f(mxL,mx); gl.uniform1f(swL,sw); gl.uniform1f(tmL,(now-dz0)/1000);
+      gl.uniform2f(resL,faceCv.width,faceCv.height); gl.uniform1f(swL,sw); gl.uniform1f(tmL,(now-dz0)/1000);
       gl.bindBuffer(gl.ARRAY_BUFFER,pb); gl.bufferData(gl.ARRAY_BUFFER,pos,gl.DYNAMIC_DRAW);
       gl.vertexAttribPointer(pL,2,gl.FLOAT,false,0,0);
       gl.drawElements(gl.TRIANGLES,idx.length,gl.UNSIGNED_SHORT,0);
@@ -930,9 +921,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   }
   // only the person stretches; the blue circle behind is plain CSS and stays put
   const person=new Image(); person.src='/person.png';
-  const ouch=new Image(); ouch.src='/person-ouch.png';
   const loaded=im=>im.complete&&im.naturalWidth ? Promise.resolve() : new Promise(r=>im.addEventListener('load',r,{once:true}));
-  if (gl) Promise.all([loaded(faceImg),loaded(person),loaded(ouch)]).then(initFace);
+  if (gl) Promise.all([loaded(faceImg),loaded(person)]).then(initFace);
 
   /* ---------- subscribe ---------- */
   const subForm=document.getElementById('subForm'), subNote=document.getElementById('subNote');
