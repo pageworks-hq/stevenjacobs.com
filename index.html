@@ -945,15 +945,17 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
       cur.classList.toggle('grab', !!grab || on); lab.textContent='PULL';
       const [x,y]=local(e);
       if (grab){ grab.x=x; grab.y=y; dirty=true; }
-      else if (!hov && on){ hov={gx:x,gy:y,x,y}; dirty=true; }
+      else if (!hov && on){ hov={gx:x,gy:y,x,y,t:performance.now()}; dirty=true; }
     });
     // keep dragging past the edge of the picture; let go once the cursor is well clear of it
     addEventListener('pointermove',e=>{
       if (!hov || grab) return;
       const r=faceImg.getBoundingClientRect(), m=r.width*.45;
       if (e.clientX<r.left-m||e.clientX>r.right+m||e.clientY<r.top-m*.5||e.clientY>r.bottom+m*.5){ hov=null; dirty=true; return; }
-      [hov.x,hov.y]=local(e); dirty=true;
+      [hov.x,hov.y]=local(e); hov.t=performance.now(); dirty=true;
     });
+    // cursor left the window: let go
+    document.addEventListener('mouseleave',()=>{ if (hov){ hov=null; dirty=true; } });
     faceImg.addEventListener('pointerleave',()=>{ if (!grab) cur.classList.remove('grab'); });
     const release=()=>{ if (!grab) return; boing(Math.min(1,Math.hypot(grab.x-grab.gx,grab.y-grab.gy)/iw)); grab=null; cur.classList.remove('grab'); };
     faceImg.addEventListener('pointerup',release); faceImg.addEventListener('pointercancel',release);
@@ -965,9 +967,12 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
       if (pull){
         dx=pull.x-pull.gx; dy=pull.y-pull.gy;
         if (!grab){
+          // stretched too far: the skin snaps back with a wobble and grabs again where the cursor is,
+          // so hovering keeps reacting for as long as you play with it
+          if (Math.hypot(dx,dy)>iw*.6){ pull.gx=pull.x; pull.gy=pull.y; dx=dy=0; boing(.5); }
           dx*=1.1; dy*=.45;
-          // the hover anchor slowly catches up, so the face eases back if the cursor rests
-          pull.gx+=(pull.x-pull.gx)*.025; pull.gy+=(pull.y-pull.gy)*.025;
+          // only once the cursor rests does the face ease back
+          if (performance.now()-pull.t>250){ pull.gx+=(pull.x-pull.gx)*.04; pull.gy+=(pull.y-pull.gy)*.04; }
         }
         // the further you pull, the harder it resists
         const L=Math.hypot(dx,dy); if (L>0){ const f=max*Math.tanh(L/max)/L; dx*=f; dy*=f; }
