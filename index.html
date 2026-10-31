@@ -161,7 +161,6 @@ nav .links a:not(.btn-blog):hover::after{width:100%}
 .face-bg{position:absolute;left:.93%;top:16.41%;width:98.45%;aspect-ratio:1;border-radius:50%;background:#35afe0;display:none}
 .face.gl .face-bg{display:block}
 .face canvas{position:absolute;left:-60%;top:-60%;width:220%;height:220%;pointer-events:none;z-index:3}
-.face-hint{margin-top:14px;text-align:center;font:500 11px var(--mono);letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
 .press{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
 .press-lbl{font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
 .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
@@ -180,7 +179,6 @@ nav .links a:not(.btn-blog):hover::after{width:100%}
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr;gap:28px}
   .face{order:-1;width:min(64vw,280px)}
-  .face-hint{display:none}
   nav .clock{display:none}
 }
 .hello{font:500 13px var(--mono);letter-spacing:.2em;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:12px}
@@ -359,7 +357,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="face-bg"></div>
         <img id="faceImg" src="/avatar.png" alt="Illustrated portrait of Steven Jacobs" width="323" height="384" draggable="false">
         <canvas id="faceCv" aria-hidden="true"></canvas>
-        <p class="face-hint">↑ Grab &amp; pull my face</p>
       </div>
     </div>
 
@@ -796,14 +793,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     const sh=(type,src)=>{ const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; };
     const prog=gl.createProgram();
     gl.attachShader(prog,sh(gl.VERTEX_SHADER,'attribute vec2 p;attribute vec2 uv;uniform vec2 res;varying vec2 v;void main(){v=uv;vec2 c=p/res*2.-1.;gl_Position=vec4(c.x,-c.y,0.,1.);}'));
-    gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,'precision mediump float;uniform sampler2D t;varying vec2 v;void main(){gl_FragColor=texture2D(t,v);}'));
+    gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,'precision mediump float;uniform sampler2D t,t2;uniform float mx;varying vec2 v;void main(){gl_FragColor=mix(texture2D(t,v),texture2D(t2,v),mx);}'));
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog,gl.LINK_STATUS)) return;
     gl.useProgram(prog);
     // mesh over the image, in canvas pixels
-    const N=40, C=N+1, cnt=C*C;
+    const N=64, C=N+1, cnt=C*C;
     const rest=new Float32Array(cnt*2), pos=new Float32Array(cnt*2), vel=new Float32Array(cnt*2), uvs=new Float32Array(cnt*2);
     for (let j=0;j<C;j++) for (let i=0;i<C;i++){ const k=(j*C+i)*2; uvs[k]=i/N; uvs[k+1]=j/N; }
+    // how much each vertex belongs to the eyebrows and the jaw, for the surprised look (image is 323×384)
+    const g2=(u,v,cx,cy,sx,sy)=>{ const a=(u*323-cx)/sx, b=(v*384-cy)/sy; return Math.exp(-(a*a+b*b)/2); };
+    const brow=new Float32Array(cnt), jaw=new Float32Array(cnt);
+    for (let n=0;n<cnt;n++){ const u=uvs[n*2], v=uvs[n*2+1];
+      brow[n]=Math.max(g2(u,v,137,92,16,8),g2(u,v,198,90,16,8));
+      jaw[n]=g2(u,v,172,182,26,14); }
     const idx=new Uint16Array(N*N*6); let q=0;
     for (let j=0;j<N;j++) for (let i=0;i<N;i++){ const a=j*C+i, b=a+1, c=a+C, d=c+1; idx.set([a,b,c,b,d,c],q); q+=6; }
     const ib=gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,idx,gl.STATIC_DRAW);
@@ -812,10 +815,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     const pb=gl.createBuffer(), pL=gl.getAttribLocation(prog,'p'); gl.enableVertexAttribArray(pL);
     const resL=gl.getUniformLocation(prog,'res');
     gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,true);
-    const tex=gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,tex);
-    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,person);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    // texture 0 is the normal smile, texture 1 the "ow!" face shown while pulled hard
+    [person,ouch].forEach((im,n)=>{
+      gl.activeTexture(gl.TEXTURE0+n); gl.bindTexture(gl.TEXTURE_2D,gl.createTexture());
+      gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,im);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    });
+    gl.uniform1i(gl.getUniformLocation(prog,'t'),0); gl.uniform1i(gl.getUniformLocation(prog,'t2'),1);
+    const mxL=gl.getUniformLocation(prog,'mx'); let mx=0, wow=0, ouchT=0;
     gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
     // alpha lookup so only you are grabbable, not the blue circle or the corners
     const ac=document.createElement('canvas'); ac.width=person.naturalWidth; ac.height=person.naturalHeight;
@@ -881,10 +889,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         // widen the falloff with the pull so the skin stretches instead of folding over itself
         const sig=Math.max(iw*.16, Math.hypot(dx,dy)*.62); s2=sig*sig*2;
       }
+      // reactions: a little pull raises the brows and drops the jaw, a big one makes you yell
+      const L=Math.hypot(dx,dy)/iw, now=performance.now();
+      if (L>.2) ouchT=now+350;
+      const ow=now<ouchT?1:0;
+      mx+=(ow-mx)*(ow?.35:.15);
+      wow+=(Math.min(1,L/.12)*(1-mx)-wow)*.2;
+      const bu=wow*iw*.03, jd=wow*iw*.025;
+      let moving=Math.abs(ow-mx)+wow;
       const stiff=grab?.3:hov?.2:.1, damp=grab?.5:hov?.62:.84;
-      let moving=0;
       for (let k=0;k<cnt*2;k+=2){
-        let tx=rest[k], ty=rest[k+1];
+        let tx=rest[k], ty=rest[k+1]-brow[k>>1]*bu+jaw[k>>1]*jd;
         if (pull){ const ex=rest[k]-pull.gx, ey=rest[k+1]-pull.gy, w=Math.exp(-(ex*ex+ey*ey)/s2); tx+=dx*w; ty+=dy*w; }
         vel[k]=vel[k]*damp+(tx-pos[k])*stiff; vel[k+1]=vel[k+1]*damp+(ty-pos[k+1])*stiff;
         pos[k]+=vel[k]; pos[k+1]+=vel[k+1];
@@ -893,7 +908,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       if (!pull && moving<.05){ pos.set(rest); vel.fill(0); dirty=false; }
       gl.viewport(0,0,faceCv.width,faceCv.height);
       gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform2f(resL,faceCv.width,faceCv.height);
+      gl.uniform2f(resL,faceCv.width,faceCv.height); gl.uniform1f(mxL,mx);
       gl.bindBuffer(gl.ARRAY_BUFFER,pb); gl.bufferData(gl.ARRAY_BUFFER,pos,gl.DYNAMIC_DRAW);
       gl.vertexAttribPointer(pL,2,gl.FLOAT,false,0,0);
       gl.drawElements(gl.TRIANGLES,idx.length,gl.UNSIGNED_SHORT,0);
@@ -901,8 +916,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   }
   // only the person stretches; the blue circle behind is plain CSS and stays put
   const person=new Image(); person.src='/person.png';
+  const ouch=new Image(); ouch.src='/person-ouch.png';
   const loaded=im=>im.complete&&im.naturalWidth ? Promise.resolve() : new Promise(r=>im.addEventListener('load',r,{once:true}));
-  if (gl) Promise.all([loaded(faceImg),loaded(person)]).then(initFace);
+  if (gl) Promise.all([loaded(faceImg),loaded(person),loaded(ouch)]).then(initFace);
 
   /* ---------- subscribe ---------- */
   const subForm=document.getElementById('subForm'), subNote=document.getElementById('subNote');
