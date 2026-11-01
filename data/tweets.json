@@ -1,5 +1,25 @@
 [
  {
+  "id": "2096270126475542648",
+  "name": "Jacob Rodri",
+  "handle": "jacobrodri_",
+  "avatar": "https://pbs.twimg.com/profile_images/1854668321909850112/rN99eiEX_normal.jpg",
+  "verified": true,
+  "text": "learning games for kids are money printers\n\nthis app is making $1,000,000/month, charging users $7.99/week\n\ntake note of its onboarding (31 screens):",
+  "date": "2026-09-05",
+  "likes": 2879,
+  "media": [
+   {
+    "type": "video",
+    "poster": "https://pbs.twimg.com/amplify_video_thumb/2096270069139681280/img/yYc0-hAEpWQjaN6H.jpg",
+    "src": "https://video.twimg.com/amplify_video/2096270069139681280/vid/avc1/444x360/erWVwxZBSp0bM0Wy.mp4",
+    "w": 1334,
+    "h": 1078
+   }
+  ],
+  "cat": "business"
+ },
+ {
   "id": "2096506121498546364",
   "name": "하루",
   "handle": "i_like_ai0",
