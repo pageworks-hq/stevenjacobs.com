@@ -114,6 +114,10 @@ a{color:inherit;text-decoration:none}
 .cursor.big{width:90px;height:90px;background:var(--fg);border-color:transparent}
 .cursor .label{position:absolute;inset:0;display:grid;place-items:center;font:500 11px var(--mono);color:var(--bg);opacity:0;transition:opacity .2s;letter-spacing:.08em}
 .cursor.big .label{opacity:1}
+/* links that open on another site (tweets especially): an orange "new tab" badge */
+.cursor.ext{width:78px;height:78px;background:var(--accent);border-color:transparent;mix-blend-mode:normal}
+.cursor.ext .label{opacity:1;color:#fff;font-size:10px}
+.cursor.ext+.cursor-dot{opacity:0}
 @media (hover:none){.cursor,.cursor-dot{display:none}}
 @media (hover:hover){body,a,button{cursor:none}}
 
@@ -945,6 +949,12 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
   document.querySelectorAll('[data-cursor]').forEach(el=>{
     el.addEventListener('pointerenter',()=>{ cur.classList.add('big'); lab.textContent=el.dataset.cursor; });
     el.addEventListener('pointerleave',()=>{ cur.classList.remove('big'); });
+  });
+  // any other link that opens in a new tab, and tweet videos
+  document.addEventListener('pointerover',e=>{
+    const ext=e.target.closest('a[target="_blank"]:not([data-cursor]), .tc-vid');
+    cur.classList.toggle('ext',!!ext);
+    if (ext) lab.textContent=ext.classList.contains('tc-vid')?'▶ PLAY':'NEW TAB ↗';
   });
 
   /* ---------- name reacts to mouse ---------- */

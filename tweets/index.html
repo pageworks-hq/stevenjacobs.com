@@ -132,9 +132,21 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .lede a{color:var(--fg);text-decoration-color:var(--accent);text-underline-offset:3px}
 .tc-vid.loading i{animation:blink 1s ease-in-out infinite}
 @keyframes blink{50%{opacity:.2;transform:scale(.6)}}
+/* the homepage cursor: a ring that trails the dot, and an orange "new tab" badge over links that open elsewhere */
+.cursor,.cursor-dot{position:fixed;top:0;left:0;pointer-events:none;z-index:100;border-radius:50%;transform:translate(-50%,-50%)}
+.cursor{width:38px;height:38px;border:1px solid var(--fg);mix-blend-mode:difference;transition:width .3s,height .3s,background .3s,border-color .3s}
+.cursor-dot{width:5px;height:5px;background:var(--accent)}
+.cursor .label{position:absolute;inset:0;display:grid;place-items:center;font:500 10px var(--mono);letter-spacing:.08em;color:#fff;opacity:0;transition:opacity .2s}
+.cursor.ext{width:78px;height:78px;background:var(--accent);border-color:transparent;mix-blend-mode:normal}
+.cursor.ext .label{opacity:1}
+.cursor.ext+.cursor-dot{opacity:0}
+@media (hover:none){.cursor,.cursor-dot{display:none}}
+@media (hover:hover){body,a,button{cursor:none}}
 </style>
 </head>
 <body>
+<div class="cursor" id="cursor"><span class="label" id="cursorLabel"></span></div>
+<div class="cursor-dot" id="cursorDot"></div>
 <nav><a href="/">← Steven Jacobs</a><div class="links"><a href="/#work">Work</a><a href="/blog/">Writing</a></div></nav>
 <main class="wrap wide">
 <header class="post-head"><div class="eyebrow">Favorite tweets</div><h1 class="title">Tweets I saved.</h1>
@@ -782,6 +794,16 @@ and the music, sports, family and watch stuff I can't scroll past. Sorted by top
       v.poster=b.querySelector('img').src; v.src=URL.createObjectURL(blob); b.replaceWith(v);
     }catch(_){ open(b.closest('.tc').querySelector('.tc-x').href,'_blank','noopener'); b.classList.remove('loading'); }
   });
+  // cursor
+  const cur=document.getElementById('cursor'), dot=document.getElementById('cursorDot'), lab=document.getElementById('cursorLabel');
+  let mx=-99, my=-99, cx=-99, cy=-99;
+  addEventListener('pointermove',e=>{ mx=e.clientX; my=e.clientY; dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`; });
+  document.addEventListener('pointerover',e=>{
+    const ext=e.target.closest('a[target="_blank"], .tc-vid');
+    cur.classList.toggle('ext',!!ext);
+    if (ext) lab.textContent=ext.classList.contains('tc-vid')?'▶ PLAY':'NEW TAB ↗';
+  });
+  (function ease(){ cx+=(mx-cx)*.18; cy+=(my-cy)*.18; cur.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`; requestAnimationFrame(ease); })();
 </script>
 </body>
 </html>
