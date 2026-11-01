@@ -365,7 +365,31 @@ h2 em{color:var(--accent)}
   .panel-foot{padding:14px 20px}
   .all-btn{width:100%;justify-content:center}
 }
-.posts-wrap{position:relative;z-index:0}
+/* blog: magazine cards, each with a coloured cover carrying the post's one-line idea */
+.blog-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px}
+.blog-head h2{margin:0;font-size:clamp(44px,6vw,80px)}
+.blog-head .eyebrow{margin-bottom:18px}
+.blog-all{flex:none;font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:12px 18px;border:1px solid var(--line);border-radius:999px;transition:background .3s,color .3s,border-color .3s}
+.blog-all:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.bcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.bcard{display:flex;flex-direction:column;text-decoration:none;color:inherit;border-radius:20px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.bcard:hover{transform:translateY(-6px);box-shadow:0 24px 40px -24px rgba(0,0,0,.35)}
+.bcover{position:relative;aspect-ratio:2/1;background:var(--c);color:#fff;display:flex;align-items:flex-end;padding:24px 26px;overflow:hidden}
+.bcover::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.35),transparent 45%),repeating-linear-gradient(-45deg,rgba(255,255,255,.07) 0 2px,transparent 2px 14px)}
+.bcover q{position:relative;font-family:var(--serif);font-style:italic;font-size:clamp(34px,3.6vw,48px);line-height:.95;letter-spacing:-.01em;quotes:none;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.bcard:hover .bcover q{transform:translateY(-4px) rotate(-1.5deg)}
+.bcover .btag{position:absolute;top:18px;left:20px;font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.22)}
+.bbody{display:flex;flex-direction:column;gap:10px;padding:22px 26px 24px;flex:1}
+.bbody time{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.bbody h3{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.05;letter-spacing:-.01em}
+.bbody p{font-size:15px;line-height:1.55;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.bbody .read{margin-top:auto;padding-top:6px;font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.bbody .read span{display:inline-block;transition:transform .3s}
+.bcard:hover .read span{transform:translateX(6px)}
+@media (max-width:700px){
+  .blog-head{flex-direction:column;align-items:flex-start}
+  .bcards{grid-template-columns:1fr}
+}
 .preview{position:fixed;top:0;left:0;width:300px;height:200px;border-radius:16px;pointer-events:none;z-index:40;overflow:hidden;opacity:0;transform:translate(-50%,-50%) scale(.6) rotate(-4deg);transition:opacity .3s,transform .4s cubic-bezier(.2,.8,.2,1);display:grid;place-items:center;font-family:var(--serif);font-size:44px;font-style:italic;color:#fff;text-align:center;padding:20px;line-height:1}
 .preview.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-4deg)}
 
@@ -386,31 +410,40 @@ h2 em{color:var(--accent)}
 .socials a{font:500 12px var(--mono);letter-spacing:.12em;border:1px solid var(--line);padding:12px 20px;border-radius:999px;white-space:nowrap;transition:background .3s,color .3s,border-color .3s}
 .socials a:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 
-footer{border-top:1px solid var(--line);padding-top:44px;font:500 11px var(--wide);font-stretch:125%;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
-footer .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:24px;padding-bottom:40px}
-footer .hi{display:flex;flex-direction:column;gap:8px}
-footer .hi a{font:800 22px var(--wide);font-stretch:125%;letter-spacing:-.01em;text-transform:none;color:var(--fg);text-decoration:none;border-bottom:3px solid var(--accent);align-self:flex-start;padding-bottom:2px}
-footer .hi a:hover{color:var(--accent)}
-footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-/* chunky round knobs, pressed in on hover */
-.knobs{list-style:none;display:flex;gap:28px}
-.knobs li{display:flex;flex-direction:column;align-items:center;gap:10px}
-.knob{--k:#ff5a1f;--ink:#fff;position:relative;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;color:var(--ink);background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--k) 75%,#fff),var(--k) 55%,color-mix(in srgb,var(--k) 70%,#000));box-shadow:0 8px 14px -6px rgba(0,0,0,.45),inset 0 -3px 6px rgba(0,0,0,.25),inset 0 2px 3px rgba(255,255,255,.35);transition:transform .2s,box-shadow .2s}
-.knob::before{content:"";position:absolute;top:5px;left:50%;width:3px;height:8px;margin-left:-1.5px;border-radius:2px;background:rgba(255,255,255,.55)}
-.knob i{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--k);box-shadow:inset 0 2px 4px rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.25);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-.knob svg{width:19px;height:19px}
-.knob:hover{transform:translateY(2px);box-shadow:0 3px 6px -3px rgba(0,0,0,.45),inset 0 -2px 4px rgba(0,0,0,.25),inset 0 2px 3px rgba(255,255,255,.35)}
-.knob:hover i{transform:rotate(-30deg)}
-.k-ig{--k:#2b2b2d}
-.stripe{display:grid;grid-template-columns:2fr 3fr 6fr 3fr;height:10px}
-.stripe b:nth-child(1){background:var(--card)}
-.stripe b:nth-child(2){background:var(--muted)}
-.stripe b:nth-child(3){background:var(--accent)}
-.stripe b:nth-child(4){background:var(--fg)}
-@media (max-width:700px){
-  footer .wrap{grid-template-columns:1fr;justify-items:center;text-align:center;gap:32px}
-  footer .hi a{align-self:center}
-  footer .legal{align-items:center}
+/* footer: an inverted block with a sign-off, site links, social tiles, and a big wordmark sitting on a sunset gradient */
+.sf{background:var(--fg);color:var(--bg);margin-top:40px;border-radius:28px 28px 0 0;overflow:hidden;position:relative}
+.sf a{color:inherit;text-decoration:none}
+.wrap.sf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-top:72px;padding-bottom:56px}
+.sf-kick{font:500 12px var(--mono);letter-spacing:.18em;text-transform:uppercase;opacity:.6;margin-bottom:18px}
+.sf-big{font-family:var(--serif);font-size:clamp(40px,5vw,68px);line-height:.95;letter-spacing:-.02em;display:inline-block}
+.sf-big em{color:var(--accent)}
+.sf-big span{display:inline-block;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.sf-big:hover span{transform:translate(6px,-6px)}
+.sf h3{font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;opacity:.55;margin-bottom:18px;font-weight:500}
+.sf-links{display:flex;flex-direction:column;gap:10px;font-size:17px}
+.sf-links a{align-self:flex-start;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .35s}
+.sf-links a:hover{background-size:100% 1px}
+/* social tiles: rounded squares that fill with the network's colours from the bottom up */
+.tiles{list-style:none;display:flex;flex-direction:column;gap:12px}
+.tile{display:flex;align-items:center;gap:14px;font-size:15px}
+.tile i{position:relative;width:48px;height:48px;border-radius:14px;border:1.5px solid color-mix(in srgb,var(--bg) 35%,transparent);display:grid;place-items:center;overflow:hidden;flex:none;transition:border-color .3s,transform .3s}
+.tile i::before{content:"";position:absolute;inset:0;background:var(--brand);transform:translateY(101%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.tile svg{position:relative;width:20px;height:20px;transition:color .3s}
+.tile small{display:block;font:500 11px var(--mono);letter-spacing:.08em;opacity:.55}
+.tile:hover i{border-color:transparent;transform:rotate(-6deg)}
+.tile:hover i::before{transform:none}
+.tile:hover svg{color:#fff}
+.t-x{--brand:#000}
+.t-ig{--brand:linear-gradient(45deg,#f9a825,#e1306c 45%,#833ab4)}
+.wrap.sf-base{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:20px;padding-bottom:20px;border-top:1px solid color-mix(in srgb,var(--bg) 18%,transparent);font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.sf-base a:hover{color:var(--accent)}
+.sf-mark{position:relative;font-family:var(--serif);font-style:italic;font-size:21vw;line-height:.78;letter-spacing:-.04em;text-align:center;white-space:nowrap;padding-top:.06em;background:linear-gradient(90deg,#ff5a1f,#ff8a3d 30%,#f2b8a2 55%,#35afe0);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;margin-bottom:-.1em}
+.sf-glow{height:14px;background:linear-gradient(90deg,#ff5a1f,#ff8a3d 30%,#f2b8a2 55%,#35afe0)}
+@media (max-width:800px){
+  .sf{border-radius:22px 22px 0 0}
+  .wrap.sf-top{grid-template-columns:1fr 1fr;gap:36px 24px;padding-top:52px;padding-bottom:40px}
+  .sf-cta{grid-column:1/-1}
+  .wrap.sf-base{flex-direction:column;gap:8px}
 }
 
 
@@ -645,20 +678,20 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 
   <section id="writing">
     <div class="wrap">
-      <div class="panel posts-wrap reveal">
-        <div class="panel-head"><span class="no">04</span><h2>Blog</h2></div>
-          <a class="post" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/" data-cursor="READ" data-preview="Semi-active income." data-color="#ff5a1f">
-            <span class="when"><span class="yr">2026</span><span class="mo">Aug</span></span>
-            <div><h4>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h4><p class="ex">Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: low startup costs, recurring revenue, and margins that make your hours worth $100–$500 each.</p></div>
-            <span class="go">→</span>
-          </a>
-          <a class="post" href="/favorite-products-for-kids/" data-cursor="READ" data-preview="Saved our sanity." data-color="#2bb3ff">
-            <span class="when"><span class="yr">2024</span><span class="mo">Jan</span></span>
-            <div><h4>Favorite Products for Kids</h4><p class="ex">The baby products and baby tech that actually worked for us. Not only did it save us time — it saved us our sanity.</p></div>
-            <span class="go">→</span>
-          </a>
-        <div class="panel-foot"><a class="all-btn" href="/blog/">See all my posts <span>→</span></a></div>
+      <div class="blog-head reveal">
+        <div><div class="eyebrow">04 · Blog</div><h2>Things I've <em>written.</em></h2></div>
+        <a class="blog-all" href="/blog/">See all my posts →</a>
       </div>
+        <div class="bcards reveal">
+          <a class="bcard" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/" data-cursor="READ" style="--c:#ff5a1f">
+            <div class="bcover"><span class="btag">Business</span><q>Semi-active income.</q></div>
+            <div class="bbody"><time datetime="2026-08-23">Aug 23, 2026</time><h3>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h3><p>Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: low startup costs, recurring revenue, and margins that make your hours worth $100–$500 each.</p><span class="read">Read the post <span>→</span></span></div>
+          </a>
+          <a class="bcard" href="/favorite-products-for-kids/" data-cursor="READ" style="--c:#2bb3ff">
+            <div class="bcover"><span class="btag">Family</span><q>Saved our sanity.</q></div>
+            <div class="bbody"><time datetime="2024-01-19">Jan 19, 2024</time><h3>Favorite Products for Kids</h3><p>The baby products and baby tech that actually worked for us. Not only did it save us time — it saved us our sanity.</p><span class="read">Read the post <span>→</span></span></div>
+          </a>
+        </div>
 
       <div class="quotes">
         <div class="quote reveal">"Everyone wants passive income. Almost nothing is passive."<small>— on income</small></div>
@@ -684,16 +717,29 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="hi"><span>Say hi</span><a href="https://x.com/StevenJacobs" target="_blank" rel="noopener">@StevenJacobs</a></div>
-    <ul class="knobs">
-      <li><span>X</span><a class="knob k-x" href="https://x.com/StevenJacobs" target="_blank" rel="noopener" aria-label="Steven Jacobs on X"><i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></i></a></li>
-      <li><span>Instagram</span><a class="knob k-ig" href="https://www.instagram.com/stevenjacobs__/" target="_blank" rel="noopener" aria-label="Steven Jacobs on Instagram"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></i></a></li>
-    </ul>
-    <div class="legal"><span>© <span id="yr">2026</span> Steven Jacobs</span><span>Austin, TX</span></div>
+<footer class="sf">
+  <div class="wrap sf-top">
+    <div class="sf-cta">
+      <p class="sf-kick">Got an idea?</p>
+      <a class="sf-big" href="https://x.com/StevenJacobs" target="_blank" rel="noopener">Let's start <em>something</em>&nbsp;<span>↗</span></a>
+    </div>
+    <div>
+      <h3>On this site</h3>
+      <div class="sf-links">
+        <a href="/#work">Work</a><a href="/#about">About</a><a href="/tweets/">Favorite tweets</a><a href="/blog/">Blog</a>
+      </div>
+    </div>
+    <div>
+      <h3>Follow</h3>
+      <ul class="tiles">
+        <li><a class="tile t-x" href="https://x.com/StevenJacobs" target="_blank" rel="noopener me"><i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.3 4.7H5.5z"/></svg></i><span>X<small>@StevenJacobs</small></span></a></li>
+        <li><a class="tile t-ig" href="https://www.instagram.com/stevenjacobs__/" target="_blank" rel="noopener me"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></i><span>Instagram<small>@stevenjacobs__</small></span></a></li>
+      </ul>
+    </div>
   </div>
-  <div class="stripe" aria-hidden="true"><b></b><b></b><b></b><b></b></div>
+  <div class="wrap sf-base"><span>© <span id="yr">2026</span> Steven Jacobs</span><span id="footClock">Austin, TX</span><a href="#top">Back to top ↑</a></div>
+  <div class="sf-mark" aria-hidden="true">Steven Jacobs</div>
+  <div class="sf-glow" aria-hidden="true"></div>
 </footer>
 
 <script>
@@ -1186,7 +1232,7 @@ footer .legal{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 
   /* ---------- clock ---------- */
   const clock=document.getElementById('clock');
-  function tickClock(){ clock.textContent='ATX '+new Date().toLocaleTimeString('en-US',{timeZone:'America/Chicago',hour:'numeric',minute:'2-digit'}); }
+  function tickClock(){ const t=new Date().toLocaleTimeString('en-US',{timeZone:'America/Chicago',hour:'numeric',minute:'2-digit'}); clock.textContent='ATX '+t; document.getElementById('footClock').textContent='Austin, TX · '+t; }
   tickClock(); setInterval(tickClock,10000);
   document.getElementById('yr').textContent=new Date().getFullYear();
 

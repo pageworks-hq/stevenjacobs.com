@@ -84,23 +84,45 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .all-btn{width:100%;justify-content:center}
 }
 .wrap.wide{max-width:1100px}
+/* blog: magazine cards, each with a coloured cover carrying the post's one-line idea */
+.blog-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px}
+.blog-head h2{margin:0;font-size:clamp(44px,6vw,80px)}
+.blog-head .eyebrow{margin-bottom:18px}
+.blog-all{flex:none;font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:12px 18px;border:1px solid var(--line);border-radius:999px;transition:background .3s,color .3s,border-color .3s}
+.blog-all:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.bcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.bcard{display:flex;flex-direction:column;text-decoration:none;color:inherit;border-radius:20px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.bcard:hover{transform:translateY(-6px);box-shadow:0 24px 40px -24px rgba(0,0,0,.35)}
+.bcover{position:relative;aspect-ratio:2/1;background:var(--c);color:#fff;display:flex;align-items:flex-end;padding:24px 26px;overflow:hidden}
+.bcover::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.35),transparent 45%),repeating-linear-gradient(-45deg,rgba(255,255,255,.07) 0 2px,transparent 2px 14px)}
+.bcover q{position:relative;font-family:var(--serif);font-style:italic;font-size:clamp(34px,3.6vw,48px);line-height:.95;letter-spacing:-.01em;quotes:none;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.bcard:hover .bcover q{transform:translateY(-4px) rotate(-1.5deg)}
+.bcover .btag{position:absolute;top:18px;left:20px;font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.22)}
+.bbody{display:flex;flex-direction:column;gap:10px;padding:22px 26px 24px;flex:1}
+.bbody time{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.bbody h3{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.05;letter-spacing:-.01em}
+.bbody p{font-size:15px;line-height:1.55;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.bbody .read{margin-top:auto;padding-top:6px;font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.bbody .read span{display:inline-block;transition:transform .3s}
+.bcard:hover .read span{transform:translateX(6px)}
+@media (max-width:700px){
+  .blog-head{flex-direction:column;align-items:flex-start}
+  .bcards{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 <nav><a href="/">← Steven Jacobs</a><div class="links"><a href="/#work">Work</a><a href="/blog/">Writing</a></div></nav>
 <main class="wrap wide">
 <header class="post-head"><div class="eyebrow">Writing</div><h1 class="title">Occasional notes.</h1></header>
-        <div class="panel">
-        <div class="panel-head"><span class="no">02</span><h2>All posts</h2></div>
-          <a class="post" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/">
-            <span class="when"><span class="yr">2026</span><span class="mo">Aug</span></span>
-            <div><h4>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h4><p class="ex">Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: low startup costs, recurring revenue, and margins that make your hours worth $100–$500 each.</p></div>
-            <span class="go">→</span>
+        <div class="bcards">
+          <a class="bcard" href="/20-businesses-you-can-start-from-scratch-plus-the-arbitrage-playbook-nobody-writes-down/" style="--c:#ff5a1f">
+            <div class="bcover"><span class="btag">Business</span><q>Semi-active income.</q></div>
+            <div class="bbody"><time datetime="2026-08-23">Aug 23, 2026</time><h3>20 Businesses You Can Start From Scratch — Plus the Arbitrage Playbook Nobody Writes Down</h3><p>Everyone wants passive income. Almost nothing is passive. What actually exists is semi-active income: low startup costs, recurring revenue, and margins that make your hours worth $100–$500 each.</p><span class="read">Read the post <span>→</span></span></div>
           </a>
-          <a class="post" href="/favorite-products-for-kids/">
-            <span class="when"><span class="yr">2024</span><span class="mo">Jan</span></span>
-            <div><h4>Favorite Products for Kids</h4><p class="ex">The baby products and baby tech that actually worked for us. Not only did it save us time — it saved us our sanity.</p></div>
-            <span class="go">→</span>
+          <a class="bcard" href="/favorite-products-for-kids/" style="--c:#2bb3ff">
+            <div class="bcover"><span class="btag">Family</span><q>Saved our sanity.</q></div>
+            <div class="bbody"><time datetime="2024-01-19">Jan 19, 2024</time><h3>Favorite Products for Kids</h3><p>The baby products and baby tech that actually worked for us. Not only did it save us time — it saved us our sanity.</p><span class="read">Read the post <span>→</span></span></div>
           </a>
         </div>
 <p style="height:80px"></p>
