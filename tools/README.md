@@ -1,6 +1,6 @@
 # Adding favorite tweets
 
-Every tweet you add goes to the top of **Favorite tweets** on stevenjacobs.com, about a minute later.
+Every tweet you add goes to the top of **Favorite tweets** on stevenjacobs.com (the newest 6 on the homepage, all of them at stevenjacobs.com/tweets/), about a minute later.
 
 Categories: `auto`, `entrepreneurship`, `marketing` (Marketing / SEO), `ai` (AI & Tech), `funny`, `music`, `sports`, `family`, `watches`.
 The old name `business` still works and means Entrepreneurship.

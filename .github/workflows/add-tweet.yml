@@ -43,7 +43,7 @@ jobs:
         run: |
           git config user.name "stevenjacobs.com bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/tweets.json index.html
+          git add data/tweets.json index.html tweets/index.html sitemap.xml
           git diff --cached --quiet && { echo "Nothing changed"; exit 0; }
           git commit -m "Favorite tweet: $URL"
           git push

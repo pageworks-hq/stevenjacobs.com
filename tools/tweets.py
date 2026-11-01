@@ -1,16 +1,19 @@
-"""Favorite tweets on the homepage.
+"""Favorite tweets: the newest few on the homepage, all of them on /tweets/.
 
-  python tools/tweets.py add <tweet url> [category]   fetch a tweet, put it first, rebuild the page
-  python tools/tweets.py build                        rebuild the cards in index.html from data/tweets.json
+  python tools/tweets.py add <tweet url> [category]   fetch a tweet, put it first, rebuild the pages
+  python tools/tweets.py build                        rebuild the cards from data/tweets.json
 
 The list lives in data/tweets.json (newest first). Cards are plain HTML so photos and
-videos show even where X's embed script is blocked.
+videos show even where X's embed script is blocked. Building also bumps the sitemap dates.
 """
-import html, io, json, os, re, sys, urllib.request
+import datetime, html, io, json, os, re, sys, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'tweets.json')
 PAGE = os.path.join(ROOT, 'index.html')
+ALL_PAGE = os.path.join(ROOT, 'tweets', 'index.html')
+SITEMAP = os.path.join(ROOT, 'sitemap.xml')
+HOME_N = 6  # cards on the homepage
 
 CATS = [('all', 'All'), ('business', 'Entrepreneurship'), ('marketing', 'Marketing / SEO'), ('ai', 'AI &amp; Tech'), ('funny', 'Funny'),
         ('music', 'Music'), ('sports', 'Sports'), ('family', 'Family'), ('watches', 'Watches')]
@@ -123,17 +126,18 @@ def body(t):
 
 def card(d, label):
     url = f'https://x.com/{d["handle"]}/status/{d["id"]}'
+    alt = html.escape(f'Image from @{d["handle"]}: ' + re.sub(r'\s+', ' ', d['text'])[:90].strip(), quote=True)
     y, m, dd = d['date'].split('-')
     media = ''
     if d['media']:
         cells = ''
         for x in d['media'][:4]:
             if x['type'] == 'photo':
-                cells += (f'<a href="{url}" target="_blank" rel="noopener"><img src="{x["src"]}?name=medium" alt="" loading="lazy" '
+                cells += (f'<a href="{url}" target="_blank" rel="noopener"><img src="{x["src"]}?name=medium" alt="{alt}" loading="lazy" '
                           f'width="{x["w"]}" height="{x["h"]}"></a>')
             else:
                 cells += (f'<button type="button" class="tc-vid" data-src="{x["src"]}" aria-label="Play video">'
-                          f'<img src="{x["poster"]}?name=medium" alt="" loading="lazy" width="{x["w"]}" height="{x["h"]}"><i></i></button>')
+                          f'<img src="{x["poster"]}?name=medium" alt="{alt}" loading="lazy" width="{x["w"]}" height="{x["h"]}"><i></i></button>')
         media = f'<div class="tc-media n{min(len(d["media"]), 4)}">{cells}</div>'
     more = f' <a class="tc-more" href="{url}" target="_blank" rel="noopener">Show more</a>' if len(d['text']) >= 260 else ''
     tick = '<span class="tc-tick" aria-label="Verified">✓</span>' if d['verified'] else ''
@@ -159,21 +163,44 @@ def save(tweets):
         f.write('\n')
 
 
+def splice(s, start, end, new):
+    a = s.index(start) + len(start)
+    return s[:a] + new + s[s.index(end, a):]
+
+
+def rewrite(path, fn):
+    with io.open(path, encoding='utf-8') as f:
+        s = f.read()
+    with io.open(path, 'w', encoding='utf-8', newline='') as f:
+        f.write(fn(s))
+
+
 def build(tweets):
     label = dict(CATS)
-    with io.open(PAGE, encoding='utf-8') as f:
-        s = f.read()
-    start = s.index('<div class="tweets" id="tweetGrid">\n') + len('<div class="tweets" id="tweetGrid">\n')
-    end = s.index('        </div>\n        <div class="tw-more" id="tweetMore">', start)
-    s = s[:start] + ''.join(card(t, label[t['cat']]) for t in tweets) + s[end:]
-    counts = {c: sum(1 for t in tweets if t['cat'] == c) for c, _ in CATS}
-    counts['all'] = len(tweets)
-    tabs = ''.join(f'<button type="button" data-cat="{c}" aria-pressed="{"true" if c == "all" else "false"}">{n}<sup>{counts[c]}</sup></button>'
-                   for c, n in CATS if counts[c])
-    s = re.sub(r'(<div class="tabs" role="group" aria-label="Filter tweets">).*?(</div></div>)', lambda m: m.group(1) + tabs + m.group(2), s, count=1)
-    s = re.sub(r'Show all <span>\d+</span> tweets', f'Show all <span>{len(tweets)}</span> tweets', s)
-    with io.open(PAGE, 'w', encoding='utf-8', newline='') as f:
-        f.write(s)
+    cards = [card(t, label[t['cat']]) for t in tweets]
+    grid = '<div class="tweets" id="tweetGrid">\n'
+
+    def home(s):
+        s = splice(s, grid, '        </div>\n        <div class="tw-more" id="tweetMore">', ''.join(cards[:HOME_N]))
+        return re.sub(r'See all <span>\d+</span> favorite tweets', f'See all <span>{len(tweets)}</span> favorite tweets', s)
+
+    def everything(s):
+        s = splice(s, grid, '        </div>\n        </div>\n<p', ''.join(cards))
+        counts = {c: sum(1 for t in tweets if t['cat'] == c) for c, _ in CATS}
+        counts['all'] = len(tweets)
+        tabs = ''.join(f'<button type="button" data-cat="{c}" aria-pressed="{"true" if c == "all" else "false"}">{n}<sup>{counts[c]}</sup></button>'
+                       for c, n in CATS if counts[c])
+        return re.sub(r'(<div class="tabs" role="group" aria-label="Filter tweets">).*?(</div></div>)', lambda m: m.group(1) + tabs + m.group(2), s, count=1)
+
+    def sitemap(s):
+        today = datetime.date.today().isoformat()
+        for loc in ('https://stevenjacobs.com/', 'https://stevenjacobs.com/tweets/'):
+            s = re.sub(rf'(<loc>{re.escape(loc)}</loc>\s*<lastmod>)[^<]*', rf'\g<1>{today}', s)
+        return s
+
+    rewrite(PAGE, home)
+    rewrite(ALL_PAGE, everything)
+    rewrite(SITEMAP, sitemap)
 
 
 def main(argv):
