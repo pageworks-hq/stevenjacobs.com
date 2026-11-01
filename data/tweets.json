@@ -1,5 +1,17 @@
 [
  {
+  "id": "2108376910577246579",
+  "name": "Suraj Sharma",
+  "handle": "suraj_sharma14",
+  "avatar": "https://pbs.twimg.com/profile_images/2079192339889938432/WEbyDq4I_normal.jpg",
+  "verified": true,
+  "text": "Every vibe coder's pre-launch prompt:\n\n\"Claude, before I launch, do these 20 things:\n\n1. Hide every API key. Nothing in the frontend, nothing in git\n2. Rotate any key that was ever committed\n3. Turn on rate limiting so one user can't burn my bill\n4. Check auth on every route not",
+  "date": "2026-10-09",
+  "likes": 2233,
+  "media": [],
+  "cat": "ai"
+ },
+ {
   "id": "2113314596505456785",
   "name": "Chris Koerner",
   "handle": "mhp_guy",
@@ -904,18 +916,6 @@
     "h": 1080
    }
   ]
- },
- {
-  "id": "2108376910577246579",
-  "cat": "ai",
-  "name": "Suraj Sharma",
-  "handle": "suraj_sharma14",
-  "avatar": "https://pbs.twimg.com/profile_images/2079192339889938432/WEbyDq4I_normal.jpg",
-  "verified": true,
-  "text": "Every vibe coder's pre-launch prompt:\n\n\"Claude, before I launch, do these 20 things:\n\n1. Hide every API key. Nothing in the frontend, nothing in git\n2. Rotate any key that was ever committed\n3. Turn on rate limiting so one user can't burn my bill\n4. Check auth on every route not",
-  "date": "2026-10-09",
-  "likes": 2233,
-  "media": []
  },
  {
   "id": "2108259892079554765",
