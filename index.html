@@ -1082,7 +1082,7 @@ h2 em{color:var(--accent)}
     gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,person);
     gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
-    const swL=gl.getUniformLocation(prog,'sw'), tmL=gl.getUniformLocation(prog,'tm'); let sw=0, wow=0, dzT=0, dz0=0;
+    const swL=gl.getUniformLocation(prog,'sw'), tmL=gl.getUniformLocation(prog,'tm'); let sw=0, wow=0, dzT=0, dz0=0, dzDone=false, lastPull=0;
     gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
     // alpha lookup so only you are grabbable, not the blue circle or the corners
     const ac=document.createElement('canvas'); ac.width=person.naturalWidth; ac.height=person.naturalHeight;
@@ -1154,9 +1154,14 @@ h2 em{color:var(--accent)}
         const sig=Math.max(iw*.16, Math.hypot(dx,dy)*.62); s2=sig*sig*2;
       }
       // reactions: a little pull raises the brows and drops the jaw, a big one sends your eyes spinning,
-      // and they keep spinning for a couple of seconds after you let go
+      // and they keep spinning for a couple of seconds after you let go. A spin lasts 5s at most; after that
+      // the eyes stay normal until you've stopped pulling for a moment
       const L=Math.hypot(dx,dy)/iw, now=performance.now();
-      if (L>.2){ if (now>=dzT) dz0=now; dzT=now+1900; }
+      if (L>.2){
+        lastPull=now;
+        if (!dzDone && now>=dzT){ if (dzT===dz0+5000) dzDone=true; else dz0=now; }  // ran out vs. a fresh spin
+        if (!dzDone) dzT=Math.min(now+1900,dz0+5000);
+      } else if (now-lastPull>1500 && now>=dzT){ dzDone=false; dzT=0; }
       const dz=now<dzT?1:0;
       sw+=(dz-sw)*(dz?.12:.05);
       wow+=(Math.min(1,L/.12)*(1-sw)-wow)*.2;
