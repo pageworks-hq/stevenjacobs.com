@@ -1,5 +1,25 @@
 [
  {
+  "id": "2116996121432350860",
+  "name": "Ernesto Lopez",
+  "handle": "ErnestoSOFTWARE",
+  "avatar": "https://pbs.twimg.com/profile_images/1930138018951643136/wEgZY178_normal.jpg",
+  "verified": true,
+  "text": "Stop wasting your time\n\nHere's how you're going to launch an app in 24 hours\n\nand scale it to $10k/mo \nwithin 60 days:\n\n( save this and send it to claude )\n\nStep 1: Claude Code + an MCP\nlike ScreensDesign or Appllama\n\nthose MCPs give Claude references from other apps\n\nso you get",
+  "date": "2026-11-01",
+  "likes": 14,
+  "media": [
+   {
+    "type": "video",
+    "poster": "https://pbs.twimg.com/amplify_video_thumb/2116995553699512320/img/T3n1Sz_-bU6ZQjIq.jpg",
+    "src": "https://video.twimg.com/amplify_video/2116995553699512320/vid/avc1/524x360/X0M-Yq7w9WMRQB5d.mp4",
+    "w": 1920,
+    "h": 1316
+   }
+  ],
+  "cat": "business"
+ },
+ {
   "id": "2116711832022868037",
   "name": "Suraj Sharma",
   "handle": "suraj_sharma14",
