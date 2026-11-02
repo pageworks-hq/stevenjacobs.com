@@ -14,7 +14,7 @@ on:
         default: auto
         type: choice
         # "business" is the old name for entrepreneurship, kept so existing shortcuts still work
-        options: [auto, entrepreneurship, marketing, ai, funny, music, sports, family, watches, business]
+        options: [auto, entrepreneurship, quotes, marketing, ai, funny, music, sports, family, watches, business]
 
 permissions:
   contents: write

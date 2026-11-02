@@ -2,7 +2,7 @@
 
 Every tweet you add goes to the top of **Favorite tweets** on stevenjacobs.com (the newest 6 on the homepage, all of them at stevenjacobs.com/tweets/), about a minute later.
 
-Categories: `auto`, `entrepreneurship`, `marketing` (Marketing / SEO), `ai` (AI & Tech), `funny`, `music`, `sports`, `family`, `watches`.
+Categories: `auto`, `entrepreneurship`, `quotes` (Life Quotes), `marketing` (Marketing / SEO), `ai` (AI & Tech), `funny`, `music`, `sports`, `family`, `watches`.
 The old name `business` still works and means Entrepreneurship.
 
 `auto` guesses from the tweet's words. For a smarter guess, add a Claude API key: repo **Settings → Secrets and variables →
@@ -34,7 +34,7 @@ In the **Shortcuts** app, tap **+** and name it **Add to stevenjacobs.com**. The
 
 1. Tap the **ⓘ** (details) → turn on **Show in Share Sheet**. Back on the editor, the top block says
    "Receive **Any** input from **Share Sheet**": tap *Any* and leave only **URLs** and **Text** on.
-2. Add **Choose from List**. List items: `auto`, `entrepreneurship`, `marketing`, `ai`, `funny`, `music`, `sports`, `family`, `watches`.
+2. Add **Choose from List**. List items: `auto`, `entrepreneurship`, `quotes`, `marketing`, `ai`, `funny`, `music`, `sports`, `family`, `watches`.
    Prompt: `Category?`
 3. Add **Get Contents of URL**:
    - URL: `https://api.github.com/repos/pageworks-hq/stevenjacobs.com/actions/workflows/add-tweet.yml/dispatches`

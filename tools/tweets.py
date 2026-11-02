@@ -15,11 +15,12 @@ ALL_PAGE = os.path.join(ROOT, 'tweets', 'index.html')
 SITEMAP = os.path.join(ROOT, 'sitemap.xml')
 HOME_N = 6  # cards on the homepage
 
-CATS = [('all', 'All'), ('business', 'Entrepreneurship'), ('marketing', 'Marketing / SEO'), ('ai', 'AI &amp; Tech'), ('funny', 'Funny'),
+CATS = [('all', 'All'), ('business', 'Entrepreneurship'), ('quotes', 'Life Quotes'), ('marketing', 'Marketing / SEO'), ('ai', 'AI &amp; Tech'), ('funny', 'Funny'),
         ('music', 'Music'), ('sports', 'Sports'), ('family', 'Family'), ('watches', 'Watches')]
 # other names people may type or pick in the shortcut
 ALIASES = {'entrepreneurship': 'business', 'startups': 'business', 'money': 'business', 'seo': 'marketing',
-           'marketing/seo': 'marketing', 'growth': 'marketing', 'tech': 'ai', 'humor': 'funny'}
+           'marketing/seo': 'marketing', 'growth': 'marketing', 'tech': 'ai', 'humor': 'funny',
+           'life': 'quotes', 'quote': 'quotes', 'lifequotes': 'quotes', 'life quotes': 'quotes', 'wisdom': 'quotes'}
 # "auto": every keyword hit scores for its category (weight in front), the highest total wins
 KEYWORDS = {
     'watches': (3, r'\b(rolex|patek|omega|audemars|richard mille|gmt|daytona|submariner|horolog\w*|wristwatch|timepiece|cartier)\b'),
@@ -34,6 +35,8 @@ KEYWORDS = {
               r'models?|automation|automate\w*|bots?|github|repo|api|code|coding|developer|open.?source|starlink|software)\b'),
     'business': (2, r'(\$\d|\bmrr\b|\barr\b|revenue|profit|startup|founder|entrepreneur\w*|business|app store|saas|/mo\b|/month|'
                     r'per month|million|\$1m|solo|side hustle|make money|making money|income|apps? making|bootstrap\w*|exit|acquired)'),
+    'quotes': (2, r'(life|happy|happiness|joy|grateful|gratitude|privilege|mind|discipline|depression|dopamine|energy|'
+                  r'patience|wisdom|regret|fear|courage|habits?|genius|idiot|motion|avoid\w*|purpose|peace|relationships?)'),
     'funny': (3, r'(😂|🤣|lmao|\blol\b|hilarious|funny|meme|no context|snl)'),
 }
 MON = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split()
@@ -107,7 +110,7 @@ def guess(text):
     t = text.lower()
     scores = {cat: w * len(re.findall(pat, t)) for cat, (w, pat) in KEYWORDS.items()}
     best = max(scores, key=scores.get)
-    return best if scores[best] else 'business'
+    return best if scores[best] else ('quotes' if len(text) < 200 else 'business')  # short, plain lines are usually sayings
 
 
 def fmt(n):
