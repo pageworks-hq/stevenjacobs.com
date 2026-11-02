@@ -1,5 +1,24 @@
 [
  {
+  "id": "2096554949349875958",
+  "name": "Evan",
+  "handle": "StockMKTNewz",
+  "avatar": "https://pbs.twimg.com/profile_images/1366208150211350534/GfAPwpyD_normal.jpg",
+  "verified": true,
+  "text": "Robinhood $HOOD now makes more money from trading Prediction Markets on its platform than it does from people trading stocks",
+  "date": "2026-09-06",
+  "likes": 3304,
+  "media": [
+   {
+    "type": "photo",
+    "src": "https://pbs.twimg.com/media/HRh1As1W4AMM7lo.jpg",
+    "w": 3600,
+    "h": 2025
+   }
+  ],
+  "cat": "business"
+ },
+ {
   "id": "2099471728154186170",
   "name": "Marc Lou",
   "handle": "marclou",
