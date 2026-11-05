@@ -1,5 +1,24 @@
 [
  {
+  "id": "2118022461274882498",
+  "name": "Bahattin Duran",
+  "handle": "bdurangg",
+  "avatar": "https://pbs.twimg.com/profile_images/2008232515975221250/5UCi1fgR_normal.jpg",
+  "verified": true,
+  "text": "app store rejection checker diye bir repo buldum, app'lerimi bununla taradım\n\nbir sürü info.plist sorunu ve inceleme sırasında potansiyel red sebebi çıkardı. belirli kriterleri kod ve metadata seviyesinde tarıyor, üst[üne düzeltme de öneriyor\n\nyayına çıkmadan önce app'leri",
+  "date": "2026-11-04",
+  "likes": 185,
+  "media": [
+   {
+    "type": "photo",
+    "src": "https://pbs.twimg.com/media/HVYqMlJWkAA2WLk.jpg",
+    "w": 1200,
+    "h": 600
+   }
+  ],
+  "cat": "marketing"
+ },
+ {
   "id": "2118093869556408468",
   "name": "borja",
   "handle": "borjafat",
