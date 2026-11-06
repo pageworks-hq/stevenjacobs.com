@@ -1,5 +1,24 @@
 [
  {
+  "id": "2089939968974090491",
+  "name": "Chad",
+  "handle": "ChadAppDev",
+  "avatar": "https://pbs.twimg.com/profile_images/2067292691403071488/cSX1k-PR_normal.jpg",
+  "verified": true,
+  "text": "🚨 Apple just gave app developers a new way to stop subscription cancellations\n\nThe new Retention Messaging API lets you show users custom offers when they try to cancel\n\nYou can:\n\n- Offer a cheaper subscription\n- Give them an exclusive discount\n- Remind them what they’ll lose",
+  "date": "2026-08-19",
+  "likes": 1104,
+  "media": [
+   {
+    "type": "photo",
+    "src": "https://pbs.twimg.com/media/HQD1U5jXoAAMvCR.jpg",
+    "w": 1152,
+    "h": 509
+   }
+  ],
+  "cat": "marketing"
+ },
+ {
   "id": "2118430317635608930",
   "name": "Jah Mills",
   "handle": "itsjahmills",
