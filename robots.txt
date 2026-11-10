@@ -1,5 +1,6 @@
 # Welcome, crawlers and AI agents.
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 Sitemap: https://stevenjacobs.com/sitemap.xml
