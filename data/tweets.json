@@ -1,5 +1,25 @@
 [
  {
+  "id": "2123867698215964800",
+  "name": "borja",
+  "handle": "borjafat",
+  "avatar": "https://pbs.twimg.com/profile_images/2044204861462351872/6pezhwSg_normal.jpg",
+  "verified": true,
+  "text": "Claude can now find pages dragging your site down on Google, and fix them.\n\nGoogle’s 2024 leaked documents revealed a score for your whole site, called siteAuthority, after years of saying it didn’t exist.\n\nHere’s how it works with the SEO connector in Claude:\n\n• Connect Search",
+  "date": "2026-11-20",
+  "likes": 67,
+  "media": [
+   {
+    "type": "video",
+    "poster": "https://pbs.twimg.com/amplify_video_thumb/2123867600169979904/img/B9IF_T4ivHUGEN_7.jpg",
+    "src": "https://video.twimg.com/amplify_video/2123867600169979904/vid/avc1/480x852/5uDkk81XgXR9-Ehb.mp4",
+    "w": 1080,
+    "h": 1920
+   }
+  ],
+  "cat": "marketing"
+ },
+ {
   "id": "2121287173215301894",
   "name": "Esoteric Joe⚡️",
   "handle": "esoteric_joe",
