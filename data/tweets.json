@@ -1,5 +1,25 @@
 [
  {
+  "id": "2124010706886406489",
+  "name": "Nic Cruz Patane",
+  "handle": "niccruzpatane",
+  "avatar": "https://pbs.twimg.com/profile_images/1805666868071391232/1qAqAOng_normal.jpg",
+  "verified": true,
+  "text": "Elon Musk said earlier this year that FSD V15 would be released to the customer fleet around late 2026.\n\nAlong with V15, Tesla is supposed to start releasing its new in-house AI navigation system. Robotaxis already run V15, and it is sooo smooth.",
+  "date": "2026-11-21",
+  "likes": 774,
+  "media": [
+   {
+    "type": "video",
+    "poster": "https://pbs.twimg.com/amplify_video_thumb/2124010642881306624/img/PaOFQyaOvySAHyaW.jpg",
+    "src": "https://video.twimg.com/amplify_video/2124010642881306624/vid/avc1/640x360/ndLZ98OY22MjN9ie.mp4",
+    "w": 3840,
+    "h": 2160
+   }
+  ],
+  "cat": "family"
+ },
+ {
   "id": "2123867698215964800",
   "name": "borja",
   "handle": "borjafat",
