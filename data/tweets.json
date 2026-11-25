@@ -1,5 +1,25 @@
 [
  {
+  "id": "2125315491522650299",
+  "name": "ClaudeDevs",
+  "handle": "ClaudeDevs",
+  "avatar": "https://pbs.twimg.com/profile_images/2044472418815893504/xf14RxM8_normal.png",
+  "verified": true,
+  "text": "You can now install Claude artifacts as desktop apps on Mac and Windows.\n\nAsk Claude to build an artifact, click \"Install as app\", and open it like any other app. It can use your connectors and, if you allow it, send notifications or add a menu bar item.",
+  "date": "2026-11-24",
+  "likes": 62401,
+  "media": [
+   {
+    "type": "video",
+    "poster": "https://pbs.twimg.com/amplify_video_thumb/2125315273460772865/img/NFT5H74CFoMA20tI.jpg",
+    "src": "https://video.twimg.com/amplify_video/2125315273460772865/vid/avc1/640x360/ulu2N7k4uBJZcJTA.mp4",
+    "w": 3840,
+    "h": 2160
+   }
+  ],
+  "cat": "business"
+ },
+ {
   "id": "2125458540315693116",
   "name": "Val Katayev",
   "handle": "ValKatayev",
