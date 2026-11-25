@@ -1,5 +1,25 @@
 [
  {
+  "id": "2125458540315693116",
+  "name": "Val Katayev",
+  "handle": "ValKatayev",
+  "avatar": "https://pbs.twimg.com/profile_images/1435486133228609537/YhnSeNQk_normal.jpg",
+  "verified": true,
+  "text": "So everyone is now a software developer. Got it. World domination is inevitable for Claude.",
+  "date": "2026-11-25",
+  "likes": 31,
+  "media": [
+   {
+    "type": "video",
+    "poster": "https://pbs.twimg.com/amplify_video_thumb/2125315273460772865/img/NFT5H74CFoMA20tI.jpg",
+    "src": "https://video.twimg.com/amplify_video/2125315273460772865/vid/avc1/640x360/ulu2N7k4uBJZcJTA.mp4",
+    "w": 3840,
+    "h": 2160
+   }
+  ],
+  "cat": "business"
+ },
+ {
   "id": "2125234630538543219",
   "name": "trey",
   "handle": "treyscalez",
